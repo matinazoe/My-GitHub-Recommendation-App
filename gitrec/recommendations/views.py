@@ -61,7 +61,7 @@ def active_user_list(request):
 def user_detail(request, username):
     user = get_object_or_404(User,username=username, is_active=True)
     return render(request, 'recommendations/user/user_detail.html', {'section': 'active_users',
-                                                        'user': user,'userprofile':userprofile})													  	
+                                                        'user': user})													  	
 
 
 # Review Views

@@ -11,7 +11,12 @@
 		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 		<form id="searchform" action="{% url 'recommendations:search_repo' %}" method="get" accept-charset="utf-8" class="searchform">
 			<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search for ">
-
+<!--			{% buttons %} 
+				<button type="submit" class="searchbutton">
+					{% bootstrap_icon "search" %} Search
+					<i class="fa fa-search"></i>
+				</button> 
+			{% endbuttons %}  -->
 		</form>
 	</div>
 	{% if repos %}
