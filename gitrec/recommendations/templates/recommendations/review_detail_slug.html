@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block title %}
+<h1>{{ review.title }}</h1>
+{% endblock %}
+
+{% block content %}
+<h3>{{ review.title }}</h3>
+<p class="tags">Tags: {{ review.tags.all|join:", " }}</p>
+<h4>Rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_review_list' review.user_name %}" >{{ review.user_name }}</a></h4>
+<p>{{ review.pub_date }}</p>
+<p>{{ review.comment|linebreaks }}</p>
+{% endblock %}

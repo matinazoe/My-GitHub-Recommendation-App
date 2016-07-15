@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load recommendations_tags %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+<h1>Published Reviews and Ratings</h1>
+{% endblock %}
+
+{% block content %}
+	{% if review_list %}
+		<ul>
+		{% for review in latest_review_list %}
+			<li><a href="{{ review.get_absolute_url }}">{{ review.title }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No reviews are available.</p>
+	{% endif %}
+{% endblock %}

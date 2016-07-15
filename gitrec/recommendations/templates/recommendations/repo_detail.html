@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block title %}
+	<h4>{{ repo.name }}</h4>
+
+{% endblock %}
+
+{% block content %}
+	<div class="tags">
+		<p class="text-info">
+			Tags: {{ repo.tags.all|join:", " }}
+		</p>
+	</div>
+	<h5>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h5>
+		<p>url:	<a href="{{repo.url}}"></a>{{repo.url}}</p>
+		<p>description:	{{repo.description}}</p>
+	
+	{% if recommended_products %}
+		<div class="recommendations">
+			<h3> "Users who watch this product also watch" </h3>
+			{% for repo in recommended_projects %}
+				<div class="item">
+					<a href="{{ repo.get_absolute_url }}">{{ repo.name }}>
+					<p>url:	<a href="{{repo.url}}"></a>{{repo.url}}</p>
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+	
+	<h3>Similar Projects</h3>
+	{% for repo in similar_repos %}
+		<p>
+		<a href="{{ repo.get_absolute_url }}">{{ repo.name }}</a>
+		<p>url:	<a href="{{repo.url}}"></a>{{repo.url}}</p>
+		</p>
+	{% empty %}
+		There are no similar projects yet.
+	{% endfor %}		
+
+	<h3>Recent reviews</h3>
+
+	{% if repo.review_set.all %}
+		<div class="row">
+			{% for review in repo.review_set.all %}
+				<div class="col-xs-6 col-lg-4">
+					<em>{{ review.title }}</em>
+					<h5><a href="{% url 'recommendations:review_detail' review.id %}">  Read more  </a></h5>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>No reviews for this repo yet</p>
+	{% endif %}
+
+
+<h5><a href="{% url 'recommendations:add_review' repo.id %}">Add your review</h3>
+
+
+{% endblock %}

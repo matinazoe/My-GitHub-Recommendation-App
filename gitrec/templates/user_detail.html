@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+<html>
+	<head>
+		<link rel="stylesheet" href="{% static 'Github/css/bootstrap.css' %}" />
+		<script src="{% static 'Github/js/bootstrap.js' %}"></script>
+	</head>
+	<body  style="background-color:#00cccc">
+	<body>
+		{% block title %}
+			<h1> Profile for user "{{ user.username }}" <h1>
+		{% endblock %}
+		<div class="container">
+			{% block content %}
+				
+				<div align="left">
+					<p><b>ID:</b>          {{ profile.id }}</p>
+					<p><b>Email:</b>       {{ user.email }}</p>
+					<p><b>Date Joined:</b> {{ user.date_joined }}</p>
+					<p><b>Company:</b>		{{ profile.company }}</p>
+					<p><b>Location:</b>	{{ profile.location }}</p>
+					<p><b>Type:</b>		{{ profile.type }}</p>
+				</div>
+				
+			{% endblock %}
+		</div>
+	</body>	
+</html>

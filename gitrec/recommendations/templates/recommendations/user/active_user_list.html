@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block title %}Active Users{% endblock %}
+
+{% block content %}
+    
+    <div id="user-list">
+        {% for user in users %}
+            <div class="active-users">
+				<p><a href="{% url 'user_detail' user.username%}">{{ user.username }</a> </p> 
+				<p> {{ user.get_full_name }} </p>
+				<p> {{ user.email }} </p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

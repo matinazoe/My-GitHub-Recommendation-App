@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{ user.get_full_name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ user.get_full_name }}</h1>
+    <div class="profile-info">
+		{% user.username %}
+		{% user.email %}
+		<div class="info">
+			GitHub user:<a href="{{ user.profiled.get_GitHub_url }}" class="title">{{ user.username }}</a>
+		</div>
+    </div>
+    {% with total_followers=user.all_followers.count %}
+        <span class="count">
+            <span class="total">{{ total_followers }}</span>
+            follower{{ total_followers|pluralize }}
+        </span>
+    {% endwith %}
+{% endblock %}

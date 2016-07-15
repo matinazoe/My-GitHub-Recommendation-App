@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block title %}
+<h1>Projects</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h3>Search for Projects</h3>
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+		<form id="searchform" action="{% url 'recommendations:search_repo' %}" method="get" accept-charset="utf-8" class="searchform">
+			<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search for ">
+
+		</form>
+	</div>
+	{% if repos %}
+		<div class="row">
+			{% if tag %}
+				<h2>Projects tagged with "{{ tag.name }}"</h2>
+			{% endif %}
+			{% for repo in repos %}
+			<div class="col-xs-6 col-lg-4">
+				<h4><a href="{% url 'recommendations:repo_detail' repo.id %}">
+				{{ repo.name }}</a></h4>
+				<p class="tags">
+					Tags: 
+					{% for tag in repo.tags.all %}
+						<a href="{% url 'recommendations:repo_list_by_tag' tag.slug %}">{{ tag.name }}</a>
+						{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+				</p>
+				
+				<h5>{{ repo.review_set.count }} reviews </h5>
+
+				<h5>{{ repo.average_rating | floatformat }} average rating</h5>
+			</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>No repos are available.</p>
+	{% endif %}
+	{% include "pagination.html" with page=repos %}
+{% endblock %}
+

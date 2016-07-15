@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load recommendations_tags %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+<h1>Published Reviews and Ratings</h1>
+{% endblock %}
+
+{% block content %}
+  	{% if review_list %}
+	<div>
+        {% if tag %}
+            <h3>Reviews tagged with "{{ tag.name }}"</h3>
+        {% endif %}	
+		{% for review in review_list %}
+			<div>
+				<h4><a href="#">{{ review.title }}</a></h4>
+					<p class="tags">
+						Tags: 
+						{% for tag in review.tags.all %}
+							<a href="{% url 'recommendations:review_list_by_tag' tag.slug %}"> {{ tag.name }} </a>
+							{% if not forloop.last %}, {% endif %}
+						{% endfor %}
+					</p>
+								
+				<h5><a href="{% url 'recommendations:review_detail' review.id %}"> review for{{ review.repo.name }}	</a></h5>
+				
+				<h6>rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_review_list' review.user_name %}" >{{ review.user_name }}</h6>
+					<p>{{ review.comment|truncatewords:30|linebreaks }}</p>
+					<p class="date"> Published {{ review.pub_date }} </p>
+			</div>
+		{% endfor %}
+	</div>
+	{% else %}
+		<p>No reviews are available.</p>
+	{% endif %}
+	{% include "pagination.html" with page=latest_review_list %}
+{% endblock %}

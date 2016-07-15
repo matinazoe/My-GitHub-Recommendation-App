@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+	<h1>Welcome to GitHub Recommendations</h1>
+	<div >
+		<h2><a href="/">Last review</a></h2>
+	</div>
+{% endblock %}
+
+{% block content %}
+ 	{% if latest_review_list %}
+	<div>
+		{% for review in latest_review_list %}
+		<div>
+			<h4><a href="{% url 'recommendations:review_detail' review.id %}">
+			{{ review.repo.name }}
+			</a></h4>
+			<h6>rated {{ review.rating }} of 5 by {{ review.user_name }}</h6>
+			<p>{{ review.comment }}</p>
+		</div>
+		{% endfor %}
+	</div>
+	{% else %}
+	<p>No reviews are available.</p>
+	{% endif %}
+{% endblock %}
+
+
+<!--<h2>Latest reviews</h2> -->
+
+
