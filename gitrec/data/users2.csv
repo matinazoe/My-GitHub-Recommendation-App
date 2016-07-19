@@ -1,0 +1,10 @@
+id,username,firstname,lastname,is_superuser,email,is_staff,is_active,date_joined,company,location,type
+224,rdempsey,Robert,Dempsey,0,-,0,1,2008-02-13 14:36:13,-,-,USR
+19693,markpasc,Mark,Paschal,0,-,0,1,2008-08-06 00:03:31,-,Paris  France,USR
+22362,mvj3,David,Chen,0,mvjome@gmail.com,0,1,2008-08-28 16:40:59,-,-,USR
+10746780,getredash,-,-,0,team@redash.io,0,1,2015-01-28 19:42:37,-,-,ORG
+49071,Yelp,-,-,0,-,0,1,2009-01-25 00:37:26,-,-,ORG
+12731565,tqdm,-,-,0,-,0,1,-,-,-,ORG
+1074304,kirang89,-,-,0,-,0,1, ,-,-,USR
+555648,sdispater,-,-,0,-,0,1, ,-,-,USR
+25111,cournape,-,-,0,-,0,1, ,-,-,USR

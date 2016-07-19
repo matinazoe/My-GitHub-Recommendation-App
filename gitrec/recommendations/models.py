@@ -60,7 +60,7 @@ class Project(models.Model):
     owner_id = models.ForeignKey(User, related_name='owns')
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
-    description = models.CharField(max_length=250, blank=True)
+    description = models.CharField(max_length=500, blank=True)
     language = models.CharField(max_length=50,blank=True,null=True)
     created_at = models.DateTimeField('date created')
     forked_from = models.ForeignKey('self', models.SET_NULL,blank=True,null=True)
@@ -68,13 +68,13 @@ class Project(models.Model):
     tags = TaggableManager()
 	
     class Meta:
-        ordering = ('-updated_at',)
+        ordering = ('-created_at',)
 	
     def average_rating(self):
         all_ratings = map(lambda x: x.rating, self.review_set.all())
         return np.mean(all_ratings)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):

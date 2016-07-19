@@ -7,20 +7,21 @@ r = redis.StrictRedis(host=settings.REDIS_HOST,
 						port=settings.REDIS_PORT,
 						db=settings.REDIS_DB)
 class Recommender(object):
-# the projects  the user(user.id) watches
-	def get_project_watched_set(self, id):
-		return 'project:{}:is_watched'.format(id)
+# the projects  the user(user_id) watches
+	def get_project_watched_set(self, id,user_id):
+		return 'project:{}:is_watched by :{}:'.format(id).format(user_id)
 		
 
-	def projects_watched(self, projects):
-		project_ids = [p.id for p in projects]
-		for project_id in project_ids:
-			for with_id in project_ids:
-			# get the other project watched with each project
-				if project_id != with_id:
-				# increment score for product purchased together
-					r.zincrby(self.get_project_watched_set(project_id),
-								with_id, amount=1)
+	def projects_watched(self, is_watched,watches):
+		for user_id in watches
+			project_ids = [p.id for p in is_watched]
+				for project_id in project_ids:
+					for with_id in project_ids:
+					# get the other project watched with each project
+						if project_id != with_id:
+						# increment score for product purchased together
+							r.zincrby(self.get_project_watched_set(project_id,user_id),
+										with_id, amount=1)
 							
 
 	def suggest_projects_for(self, projects, max_results=6):

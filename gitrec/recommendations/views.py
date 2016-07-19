@@ -98,7 +98,8 @@ def review_detail(request, review_id):
 def user_review_list(request, username=None):
     if not username:
         username = request.user.username
-    latest_review_list = Review.objects.filter(user_name=username).order_by('-pub_date')
+    user = get_object_or_404(User, username=username)
+    latest_review_list = Review.objects.filter(user_name=user).order_by('-pub_date')
     context = {'latest_review_list':latest_review_list, 'username':username}
     return render(request, 'recommendations/user_review_list.html', context)
 	
@@ -110,7 +111,7 @@ def review_detail_slug(request, year, month, day, review):
 
 #Project Views
 def repo_list(request, tag_slug=None):
-    repo_list = Project.objects.order_by('-name')
+    repo_list = Project.objects.order_by('-created_at')
     tag = None
     
     if tag_slug:
@@ -149,17 +150,23 @@ def reviews_by_repo(request, repo_id):
 @login_required
 def add_review(request, repo_id):
     repo = get_object_or_404(Project, pk=repo_id)
+    user_id = request.user.id
+    user = get_object_or_404(User, pk=user_id)
     form = ReviewForm(request.POST)
     if form.is_valid():
         rating = form.cleaned_data['rating']
+        title = form.cleaned_data['title']
         comment = form.cleaned_data['comment']
-        user_name = form.cleaned_data['user_name']
-        user_name = request.user.username
+        status = form.cleaned_data['status']		
+#        user_name = form.cleaned_data['user_name']
+        
         review = Review()
         review.repo = repo
-        review.user_name = user_name
+        review.user_name = user
         review.rating = rating
+        review.title = title
         review.comment = comment
+        review.status = status
         review.pub_date = datetime.datetime.now()
         review.save()
         return HttpResponseRedirect(reverse('recommendations:repo_detail', args=(repo.id,)))

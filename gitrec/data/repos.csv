@@ -1,0 +1,16 @@
+id,name,owner_id,url,description,language,created_at
+40229710,MobileFirst-Platform-Developer-Center/Wishlist,12657800,https://github.com/MobileFirst-Platform-Developer-Center/Wishlist,-,JavaScript,2015-08-05 06:53:37
+43757419,torch-autograd,50278,https://github.com/twitter/torch-autograd,Autograd automatically differentiates native Torch code,Lua,2015-10-06 14:51:56
+41415237,hibernate-semantic-query,959822,https://github.com/johnaohara/hibernate-semantic-query,-,Java,2015-08-26 08:50:39
+1633641,crab,723881,https://api.github.com/repos/muricoca/crab,Crab is a flexible fast recommender engine for Python that integrates classic information  ltering recommendation algorithms in the world of scientic Python packages (numpy scipy matplotlib),Python,2011-04-19 02:08:08
+12976633,mrec,360932,https://github.com/Mendeley/mrec,A recommender systems development and evaluation package by Mendeley,Python,2013-09-20 15:15:19
+2545950,python-recsys,388349,https://github.com/ocelma/python-recsys,A python library for implementing a recommender system,Python,2011-10-10 04:17:51
+21934130,PyML-Spark+A5,692262,https://github.com/jadianes/spark-movie-lens,An on-line movie recommender using Spark Python Flask and the MovieLens dataset,Jupyter Notebook,2015-07-02 07:04:17
+38416915,spark-movie-lens,692262,https://github.com/jadianes/spark-movie-lens,An on-line movie recommender using Spark Python Flask and the MovieLens dataset,Jupyter Notebook,2015-07-02 07:04:17
+1446467,pip,647025,https://github.com/pypa/pip,The PyPA recommended tool for installing Python packages,Python,2011-03-06 14:30:46
+20558093,django,1089744,https://github.com/xavfernandez/django,The Web framework for perfectionists with deadlines,Python,2014-06-06 09:21:00
+26171605,django-batchform,1089744,https://github.com/xavfernandez/django-batchform,Generic view to fill a batch of identical forms from the cells of an uploaded file (csv/xlsx/odt),-,2014-11-04 14:13:03
+52489799,Go_Fptree,12111571,https://github.com/DvHuang/Go_Fptree,-,Go,2016-02-25 02:14:53
+44443629,AMProjectR,15001116,https://github.com/dlmacedo/AMProjectR,-,R,2015-10-17 15:51:29
+41188960,3ds_hb_menu,3758364,https://github.com/aarzee/3ds_hb_menu,3ds homebrew menu (ninjhax edition),C,2015-08-22 03:43:43
+10331826,bpr,595709,https://github.com/gamboviol/bpr,Bayesian Personalized Ranking,Python,2013-05-28 09:09:17

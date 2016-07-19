@@ -4,12 +4,12 @@
 {% block title %}
 <h3>{{ review.title }}</h3>
 <p class="tags">Tags: {{ review.tags.all|join:", " }}</p>
-<h3><a href="{% url 'recommendations:repo_detail' review.repo.id %}">{{ review.repo_id }}</a></h3>
+<h4><a href="{% url 'recommendations:repo_detail' review.repo.id %}">{{ review.repo.name }}</a></h4>
 {% endblock %}
 
 {% block content %}
 
-	<h4>Rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_review_list' review.user_name %}" >{{ review.user_name }}</a></h4>
+	<h4>Rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_detail' review.user_name %}" >{{ review.user_name }}</a></h4>
 	<p>{{ review.pub_date }}</p>
 	<p>{{ review.comment }}</p>
 {% endblock %}

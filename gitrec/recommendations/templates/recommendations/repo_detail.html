@@ -8,17 +8,18 @@
 
 {% block content %}
 	<div class="tags">
-		<p class="text-info">
+		<p class="tags">
 			Tags: {{ repo.tags.all|join:", " }}
 		</p>
 	</div>
 	<h5>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h5>
-		<p>url:	<a href="{{repo.url}}"></a>{{repo.url}}</p>
-		<p>description:	{{repo.description}}</p>
+		<p><b>url:</b>	<a href="{{repo.url}}"></a>{{repo.url}}</p>
+		<p><b>Description:</b>	{{repo.description}}</p>
+		<p><b>Published on:</b>	{{repo.created_at}}</p>
 	
-	{% if recommended_products %}
+	{% if recommended_projects %}
 		<div class="recommendations">
-			<h3> "Users who watch this product also watch" </h3>
+			<h3> "Users who watch this project also watch" </h3>
 			{% for repo in recommended_projects %}
 				<div class="item">
 					<a href="{{ repo.get_absolute_url }}">{{ repo.name }}>
@@ -27,9 +28,11 @@
 				</div>
 			{% endfor %}
 		</div>
+	{% else %}
+		<p>There are no recommendations for this Project</p>
 	{% endif %}
 	
-	<h3>Similar Projects</h3>
+	<h2 style="background-color:powderblue;">Similar Projects</h2>
 	{% for repo in similar_repos %}
 		<p>
 		<a href="{{ repo.get_absolute_url }}">{{ repo.name }}</a>
@@ -37,9 +40,9 @@
 		</p>
 	{% empty %}
 		There are no similar projects yet.
-	{% endfor %}		
+	{% endfor %}
 
-	<h3>Recent reviews</h3>
+	<h2 style="background-color:powderblue;">Recent reviews</h2>
 
 	{% if repo.review_set.all %}
 		<div class="row">

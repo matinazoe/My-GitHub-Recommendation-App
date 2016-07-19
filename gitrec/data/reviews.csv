@@ -1,0 +1,12 @@
+id,username,repo_id,rating,comment
+0,rabintang,1633641,2,It contains a serious bug
+1,dlmacedo,43757419,3, possible to segment the definition of the function to be taken the gradient
+2,gamboviol,12976633,5,Extend test coverage to all base class methods and helpers
+3,johnaohara,41415237,4,Added date literals
+4,yongfei25,43757419,2,Incorrect gradient for assignment
+5,gongshaojie12 ,38416915,5,realtime recommend
+6,DvHuang,38416915,3,update the model for new users and new movies
+7,wm75,1446467,5,report successfully installed versions of requirements even if existing installations have been ignored
+8,aarzee,1446467,5,Exhaust all possible tag combinations in a reasonable order
+9,xavfernandez,1446467,4,Add support for Requires-Python
+10,gmaggini,40229710,3,Hi  I had the same issue. I fixed it by looking at XML files contained in the project and moving the comments

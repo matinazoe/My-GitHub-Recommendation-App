@@ -54,7 +54,7 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">Hello {{ user.username }} <b class="caret"></b></a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="{#%}"> {{ user.username }}' Profile</a></li>
-                        <li><a href="{% url 'recommendations:user_detail' user.username%}"> {{ user.username }}' Details</a></li>
+                        <li><a href="{% url 'recommendations:user_detail' user.username%}"> {{ user.username }}'s Info</a></li>
 						<li><a href="#">........</a></li>
                         <li class="divider"></li>
 						<li><a href="{% url 'recommendations:user_review_list' user.username %}"> User Reviews</a></li>

@@ -27,8 +27,8 @@ admin.site.register(UserProfile, ProfileAdmin)
 class RepoAdmin(admin.ModelAdmin):
     model = Project
     list_display = ('id', 'url', 'owner_id', 'name', 'description', 'language', 'created_at', 'updated_at')
-    search_fields = ['name','owner_id', 'language']
-#    prepopulated_fields = {"slug": ("name",)}	
+    search_fields = ['name','owner_id','language']
+    prepopulated_fields = {"slug": ("owner_id","name",)}	
 #    date_hierarchy = 'created_at'
     ordering = ['name','owner_id']
 
@@ -42,7 +42,7 @@ class ReviewAdmin(admin.ModelAdmin):
     list_filter = ['pub_date', 'user_name']
     search_fields = ['title', 'user_name']
     raw_id_fields = ('user_name',)
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('title','user_name','repo')}
     date_hierarchy = 'pub_date'
     ordering = ['rating', 'pub_date']	
 
