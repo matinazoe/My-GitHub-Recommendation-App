@@ -2,21 +2,30 @@
 {% block title %}
 	<h1>Welcome to GitHub Recommendations</h1>
 	<div >
-		<h2><a href="/">Last review</a></h2>
+		<h3><a href="/">Last reviews</a></h3>
 	</div>
 {% endblock %}
 
 {% block content %}
- 	{% if latest_review_list %}
+ 	{% if homepage_review_list %}
 	<div>
-		{% for review in latest_review_list %}
-		<div>
-			<h4><a href="{% url 'recommendations:review_detail' review.id %}">
-			{{ review.repo.name }}
-			</a></h4>
-			<h6>rated {{ review.rating }} of 5 by {{ review.user_name }}</h6>
-			<p>{{ review.comment }}</p>
-		</div>
+		{% for review in homepage_review_list %}
+					<div class="col-xs-6 col-lg-4">
+				<h2><a href="{% url 'recommendations:review_detail' review.id %}" >{{ review.title }}</a></h2>
+					<p class="tags">
+						Tags: 
+						{% for tag in review.tags.all %}
+							<a href="{% url 'recommendations:review_list_by_tag' tag.slug %}"> {{ tag.name }} </a>
+							{% if not forloop.last %}, {% endif %}
+						{% endfor %}
+					</p>
+								
+				<li><h4><a href="{% url 'recommendations:review_detail' review.id %}"> review for {{ review.repo.name }}	</a></h4></li>
+				
+				<h6>rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a></h6>
+					<p>{{ review.comment}}</p>
+					<p class="date"> Published {{ review.pub_date }} </p>
+			</div>
 		{% endfor %}
 	</div>
 	{% else %}

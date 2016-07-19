@@ -10,7 +10,7 @@ r = redis.StrictRedis(host=settings.REDIS_HOST,
 						db=settings.REDIS_DB)
 class Recommender(object):
 # the projects  the user(user.id) watches
-	def get_project_watched_id(self, id):
+	def get_project_watched_set(self, id):
 		return 'project:{}:is_watched'.format(id)
 		
 
@@ -21,7 +21,7 @@ class Recommender(object):
 			# get the other project watched with each project
 				if project_id != with_id:
 				# increment score for product purchased together
-					r.zincrby(self.get_project_watched_id(project_id),
+					r.zincrby(self.get_project_watched_set(project_id),
 								with_id, amount=1)
 							
 
@@ -29,14 +29,14 @@ class Recommender(object):
 		project_ids = [p.id for p in projects]
 		if len(projects) == 1:
 			# only 1 project
-			suggestions = r.zrange(self.get_project_watched_id(project_ids[0]), 0, -1, desc=True)[:max_results]
+			suggestions = r.zrange(self.get_project_watched_set(project_ids[0]), 0, -1, desc=True)[:max_results]
 		else:
 			# generate a temporary key
 			flat_ids = ''.join([str(id) for id in project_ids])
 			tmp_key = 'tmp_{}'.format(flat_ids)
 			# multiple projects, combine scores of all projects
 			# store the resulting sorted set in a temporary key
-			keys = [self.get_project_watched_id(id) for id in project_ids]
+			keys = [self.get_project_key(id) for id in project_ids]
 			r.zunionstore(tmp_key, keys)
 			# remove ids for the projects the recommendation is for
 			r.zrem(tmp_key, *project_ids)
@@ -53,4 +53,4 @@ class Recommender(object):
 	
 	def clear_recommendations(self):
 		for id in Project.objects.values_list('id', flat=True):
-			r.delete(self.get_project_watched_id(id))
+			r.delete(self.get_project_watched_set(id))

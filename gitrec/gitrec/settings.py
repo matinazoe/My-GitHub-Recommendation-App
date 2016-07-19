@@ -61,7 +61,7 @@ ROOT_URLCONF = 'gitrec.urls'
 from django.core.urlresolvers import reverse_lazy
 #LOGIN_REDIRECT_URL = reverse_lazy('recommendations:dashboard')
 
-LOGIN_REDIRECT_URL = '/recommendations/'
+LOGIN_REDIRECT_URL = '/recommendations/homepage'
 
 #LOGIN_URL = '/accounts/login/'
 #LOGIN_URL = reverse_lazy('auth:login')

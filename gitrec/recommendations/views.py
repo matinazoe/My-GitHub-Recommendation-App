@@ -22,7 +22,7 @@ from .recommender import Recommender
 import datetime
 
 def homepage(request):
-    homepage_review_list = Review.objects.order_by('-pub_date')[:4]
+    homepage_review_list = Review.objects.order_by('-pub_date')[:3]
     context = {'homepage_review_list':homepage_review_list}
     return render(request,'recommendations/homepage.html', context)
 
