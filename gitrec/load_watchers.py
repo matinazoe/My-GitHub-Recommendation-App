@@ -13,9 +13,9 @@ from django.contrib.auth.models import User
 def save_watchers_from_row(watchers_row):
     watchers = Watchers()
     watchers.id = watchers_row[0]
-    watchers.user_id = User.objects.get(id=watchers_row[1])
+    watchers.user_id = User.objects.get(id=watchers_row[3])
     watchers.repo_id = Project.objects.get(id=watchers_row[2])
-    watchers.created_at = datetime.datetime.now()
+    watchers.created_at = watchers_row[1]
     watchers.save()
 	
     
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     
     if len(sys.argv) == 2:
         print "Reading from file " + str(sys.argv[1])
-        watchers_df = pd.read_csv(sys.argv[1])
+        watchers_df = pd.read_csv(sys.argv[1], sep=';')
         print watchers_df
 
         watchers_df.apply(
