@@ -1,0 +1,7 @@
+id;title;comment;rating;user_name;repo_id
+0;serious bug;It contains a serious bug;2;3820920;1633641
+1;gradient; possible to segment the definition of the function to be taken the gradient;3;15001116;43757419
+2;Extend test coverage;Extend test coverage to all base class methods and helpers;5;595709;12976633
+3;Added date literals;Added date literals;4;959822;41415237
+4;Incorrect gradient;Incorrect gradient for assignment;2;1611276;43757419
+5;No updates;Haven't been updated recently.;2;9;1633641
