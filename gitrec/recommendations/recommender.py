@@ -1,56 +1,56 @@
 import redis
+import collections
 from django.conf import settings
 from django.contrib.auth.models import User
 
 from .models import Project, Watchers
 
-# connect to redis
-r = redis.StrictRedis(host=settings.REDIS_HOST,
-						port=settings.REDIS_PORT,
-						db=settings.REDIS_DB)
 class Recommender(object):
-# the projects  the user(user.id) watches
-	def get_project_watched_id(self, id):
-		return 'project:{}:is_watched'.format(id)
+	
+	def get_ids_per_user(self, watcher, repo):
+		watchers = Watchers.objects.filter(repo_id=repo.id).order_by('repo_id')
 		
-
-	def projects_watched(self, projects):
-		project_ids = [p.id for p in projects]
-		for project_id in project_ids:
-			for with_id in project_ids:
-			# get the other project watched with each project
-				if project_id != with_id:
-				# increment score for product purchased together
-					r.zincrby(self.get_project_watched_id(project_id),
-								with_id, amount=1)
-							
-
-	def suggest_projects_for(self, projects, max_results=6):
-		project_ids = [p.id for p in projects]
-		if len(projects) == 1:
-			# only 1 project
-			suggestions = r.zrange(self.get_project_watched_id(project_ids[0]), 0, -1, desc=True)[:max_results]
-		else:
-			# generate a temporary key
-			flat_ids = ''.join([str(id) for id in project_ids])
-			tmp_key = 'tmp_{}'.format(flat_ids)
-			# multiple projects, combine scores of all projects
-			# store the resulting sorted set in a temporary key
-			keys = [self.get_project_watched_id(id) for id in project_ids]
-			r.zunionstore(tmp_key, keys)
-			# remove ids for the projects the recommendation is for
-			r.zrem(tmp_key, *project_ids)
-            # get the project ids by their score, descendant sort
-			suggestions = r.zrange(tmp_key, 0, -1, desc=True)[:max_results]
-            # remove the temporary key
-			r.delete(tmp_key)
-		suggested_projects_ids = [int(id) for id in suggestions]
-
+		watched_ids_per_user = collections.defaultdict(list)
+		for w in watchers:
+			watched_ids_per_user[w.user_id].append(w.repo_id)
+			
+		ids_per_user = watched_ids_per_user[watcher.user_id].values
+		return ids_per_user
+	
+	def project_score(self, project):
+		score = 0
+		
+		watchers = Watchers.objects.filter(repo_id=project.id).order_by('repo_id')
+		for w in watchers:
+			ids_per_user = get_ids_per_user(w.user_id, project)
+			if repo.id in ids_per_user:
+				if repo.id!= project.id:
+					score =score +1
+		return score
+	
+			
+	def suggest_projects_for(self, project, max_results=6):
+		watchers = Watchers.objects.filter(repo_id=project.id).order_by('repo_id')
+		
+		watched_ids = []
+		for id in [w.id for w in watchers]:
+			if id not in watched_ids:
+				watched_ids.append(id)
+		watched_ids = sorted(watched_ids)
+		
+		watched_repos = list(Project.objects.filter(id__in=watched_ids))		
+		
+		scored_repos = {}
+		for repo in watched_repos:
+			scored_repos[repo].append(project_score(repo))
+		scored_repos = sorted(scored_repos, key=lambda x:x[1], reverse=True)[:max_results]
+	
+		suggested_ids = [p.id for p in scored_repos]
+		
         # get suggested projects and sort by order of appearance
-		suggested_projects = list(Project.objects.filter(id__in=suggested_projects_ids))
-		suggested_projects.sort(key=lambda x: suggested_projects_ids.index(x.id))
+		suggested_projects = list(Project.objects.filter(id__in=suggested_ids))
+		suggested_projects.sort(key=lambda x: suggested_ids_ids.index(x.id))
 		return suggested_projects
 	
 	def clear_recommendations(self):
-		for id in Project.objects.values_list('id', flat=True):
-			r.delete(self.get_project_watched_id(id))
+		watched_ids_per_user.clear()

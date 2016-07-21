@@ -134,8 +134,8 @@ def repo_detail(request, repo_id):
     repo_tags_ids = repo.tags.values_list('id', flat=True)
     similar_repos = Project.objects.filter(tags__in=repo_tags_ids).exclude(id=repo.id).exclude(forked_from=repo.id)
     similar_repos = similar_repos.annotate(same_tags=Count('tags')).order_by('-same_tags')[:4]
-    r = Recommender()
-    recommended_projects = r.suggest_projects_for([repo], 4)
+#    r = Recommender()
+#    recommended_projects = r.suggest_projects_for(repo, 4)
     return render(request, 'recommendations/repo_detail.html', {'repo': repo, 'similar_repos':similar_repos, 'recommended_projects':recommended_projects})
 
 def reviews_by_repo(request, repo_id):

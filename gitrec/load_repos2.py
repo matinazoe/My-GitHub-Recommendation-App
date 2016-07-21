@@ -19,7 +19,7 @@ def save_repo_from_row(repo_row):
 	repo.description = repo_row[6]
 	repo.language = repo_row[3]
 	repo.created_at = repo_row[4]
-	repo.language = Project.objects.get(id=repo_row[7])
+	repo.forked_from = Project.objects.get(id=repo_row[7])
 	repo.save()
     
     
