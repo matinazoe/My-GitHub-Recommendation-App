@@ -1,4 +1,4 @@
-import sys, os 
+import sys, os
 import pandas as pd
 import datetime
 
@@ -7,7 +7,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gitrec.settings")
 import django
 django.setup()
 
-from recommendations.models import Project 
+from recommendations.models import Project
 from django.contrib.auth.models import User
 
 def save_repo_from_row(repo_row):
@@ -18,13 +18,12 @@ def save_repo_from_row(repo_row):
 	repo.owner_id = User.objects.get(id=repo_row[5])
 	repo.description = repo_row[6]
 	repo.language = repo_row[3]
-	repo.created_at = repo_row[4]
-	repo.forked_from = Project.objects.get(id=repo_row[7])
+	repo.created_at = datetime.datetime.now()
 	repo.save()
-    
-    
+
+
 if __name__ == "__main__":
-    
+
     if len(sys.argv) == 2:
         print "Reading from file " + str(sys.argv[1])
         repos_df = pd.read_csv(sys.argv[1], sep=';')
@@ -36,6 +35,6 @@ if __name__ == "__main__":
         )
 
         print "There are {} repos".format(Project.objects.count())
-        
+
     else:
         print "Please, provide Project file path"
