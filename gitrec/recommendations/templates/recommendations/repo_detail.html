@@ -17,16 +17,16 @@
 		<p><b>Description:</b>	{{repo.description}}</p>
 		<p><b>Published on:</b>	{{repo.created_at}}</p>
 	
-	<h2 style="background-color:powderblue;">Recommendations for this Project</h2>
+	<h3>Recommendations for this Project</h3>
 	{% if recommended_projects %}
 		<div class="recommendations">
-			<h3> "Users who watch this project also watch" </h3>
+			<p style="background-color:powderblue;"> <b>Users who watch this project also watch: </b></p>
 			<div class="row">
 				{% for repo in recommended_projects %}
 					<div class="col-xs-6 col-lg-4">
-						<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }}>
+						<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }}</a>
 						<p>url:	<a href="{{repo.url}}"></a>{{repo.url}}</p>
-						</a>
+						
 					</div>
 				{% endfor %}
 			</div>
@@ -35,7 +35,7 @@
 		<p>There are no recommendations for this Project</p>
 	{% endif %}
 	
-	<h2 style="background-color:powderblue;">Similar Projects</h2>
+	<h3>Similar Projects</h3>
 	<div class="row">
 		{% for repo in similar_repos %}
 			<div class="col-xs-6 col-lg-4">
@@ -47,7 +47,7 @@
 			There are no similar projects yet.
 		{% endfor %}
 	</div>
-	<h2 style="background-color:powderblue;">Recent reviews</h2>
+	<h3>Recent reviews</h3>
 
 	{% if repo.review_set.all %}
 		<div class="row">

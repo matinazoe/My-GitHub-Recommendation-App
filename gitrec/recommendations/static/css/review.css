@@ -30,7 +30,11 @@ h2 {
     color: #1a1aff;
     font:  bold 18px/30px Lucida Console, serif;
 }
-
+h3 {
+    color: #ffffff;
+    font:  bold 16px/30px Lucida Sans Unicode, serif;
+	background: #1a1a1a  no-repeat fixed center;
+}
 h4 {
     color: #330033;
 	padding-right: 15px;
