@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-
 {% block title %}{{ user.get_full_name }}{% endblock %}
 
 {% block content %}
@@ -9,9 +8,11 @@
 		
 		
 		<div class="info">
-			<p> user:{{ user.username }} </p>
-			<p> user email:{{ user.email }} </p>
-			GitHub user:<a href="{{ user.profiled.get_GitHub_url }}" class="title">{{ user.username }}</a>
+			<p title="I'm a tooltip"> <b>user:</b>{{ user.username }} </p>
+			<p> <b>user email:</b>{{ user.email }} </p>
+			<p> <b>GitHub user:</b><a href="{{ user.profiled.get_GitHub_url }}" class="title">{{ user.username }}</a></p>
+			<p> <b>GitHub page: </b><a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></p>
+			
 		</div>
     </div>
     {% with total_followers=user.all_followers.count %}

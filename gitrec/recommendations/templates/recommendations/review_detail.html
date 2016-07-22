@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 {% block title %}
-<h3>{{ review.title }}</h3>
+<h2 style="font-family:Comic Sans MS;">{{ review.title }}</h2>
 <p class="tags">Tags: {{ review.tags.all|join:", " }}</p>
 <h4><a href="{% url 'recommendations:repo_detail' review.repo.id %}">{{ review.repo.name }}</a></h4>
 {% endblock %}

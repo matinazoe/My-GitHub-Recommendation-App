@@ -22,7 +22,7 @@ urlpatterns = [
 	# User
     url(r'^users/dashboard^$', views.dashboard, name='dashboard'),
     url(r'^users/$', views.active_user_list, name='active_user_list'),	
-    url(r'^users/(?P<username>[-\w]+)/$', views.user_detail, name='user_detail'),
+    url(r'^users/(?P<user_id>\w+)/$', views.user_detail, name='user_detail'),
     # Reviews
     url(r'^reviews$', views.review_list, name='review_list'),
     url(r'^reviews/latest$', views.latest_reviews, name='latest_reviews'),

@@ -58,18 +58,32 @@ def active_user_list(request):
                                                       'users': users})
 
 @login_required
-def user_detail(request, username):
-    user = get_object_or_404(User,username=username, is_active=True)
+def user_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id, is_active=True)
     return render(request, 'recommendations/user/user_detail.html', {'section': 'active_users',
                                                         'user': user})													  	
 
 
 # Review Views
     
-def review_list(request):
+def review_list(request, tag_slug=None):
     latest_review_list = Review.objects.order_by('-pub_date')[:9]
-    context = {'latest_review_list':latest_review_list}
-    return render(request, 'recommendations/review_list.html', context)
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        latest_review_list = latest_review_list.filter(tags__in=[tag])
+
+    paginator = Paginator(latest_review_list, 4) 
+    page = request.GET.get('page')
+    try:
+        latest_review_list = paginator.page(page)
+    except PageNotAnInteger:   
+        latest_review_list = paginator.page(1)
+    except EmptyPage:
+        latest_review_list = paginator.page(paginator.num_pages)
+
+    return render(request, 'recommendations/review_list.html', {'latest_review_list':latest_review_list, 'page':page, 'tag': tag})
 
 def latest_reviews(request, tag_slug=None):
     latest_review_list = Review.objects.order_by('-pub_date')
@@ -79,7 +93,7 @@ def latest_reviews(request, tag_slug=None):
         tag = get_object_or_404(Tag, slug=tag_slug)
         latest_review_list = latest_review_list.filter(tags__in=[tag])
 
-    paginator = Paginator(latest_review_list, 6) 
+    paginator = Paginator(latest_review_list, 4) 
     page = request.GET.get('page')
     try:
         reviews = paginator.page(page)

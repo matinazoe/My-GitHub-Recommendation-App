@@ -16,7 +16,7 @@
 		{% for review in latest_review_list %}
 
 			<div class="col-xs-6 col-lg-4">
-				<h2><a href="{% url 'recommendations:review_detail' review.id %}" >{{ review.title }}</a></h2>
+				<h2 style="font-family:Comic Sans MS;><a href="{% url 'recommendations:review_detail' review.id %}" >{{ review.title }}</a></h2>
 					<p class="tags">
 						Tags: 
 						{% for tag in review.tags.all %}

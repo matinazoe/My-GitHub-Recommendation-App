@@ -41,9 +41,6 @@ INSTALLED_APPS = [
     'recommendations',
     'registration',
     'taggit',
-#   'django.contrib.sites',
-    'django.contrib.sitemaps',
-#	'account'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -61,11 +58,11 @@ ROOT_URLCONF = 'gitrec.urls'
 from django.core.urlresolvers import reverse_lazy
 #LOGIN_REDIRECT_URL = reverse_lazy('recommendations:dashboard')
 
-LOGIN_REDIRECT_URL = '/recommendations/homepage'
+LOGIN_REDIRECT_URL = '/recommendations/'
 
 #LOGIN_URL = '/accounts/login/'
-#LOGIN_URL = reverse_lazy('auth:login')
-#LOGOUT_URL = reverse_lazy('auth:logout')
+LOGIN_URL = reverse_lazy('auth:login')
+LOGOUT_URL = reverse_lazy('auth:logout')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -138,7 +135,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 
-#AUTH_PROFILE_MPDULE = 'userprofile.UserProfile'
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1

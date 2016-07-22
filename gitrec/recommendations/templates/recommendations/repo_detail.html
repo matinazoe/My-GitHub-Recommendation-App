@@ -13,7 +13,8 @@
 		</p>
 	</div>
 	<h5>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h5>
-		<p><b>url:</b>	<a href="{{repo.url}}"></a>{{repo.url}}</p>
+		<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
+		
 		<p><b>Description:</b>	{{repo.description}}</p>
 		<p><b>Published on:</b>	{{repo.created_at}}</p>
 	
