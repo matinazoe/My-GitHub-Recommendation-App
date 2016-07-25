@@ -161,6 +161,14 @@ def reviews_by_repo(request, repo_id):
     similar_repos = similar_repos.annotate(same_tags=Count('tags')).order_by('-same_tags','-user_name')[:4]
     return render(request, 'recommendations/repo_review_detail.html', {'latest_review_list':latest_review_list, 'repo': repo, 'similar_repos':similar_repos})
 
+def user_repo_list(request, username=None):
+    if not username:
+        username = request.user.username
+    user = get_object_or_404(User, username=username)
+    repo_list = Project.objects.order_by('-created_at')
+    context = {'repo_list':repo_list, 'username':username}
+    return render(request, 'recommendations/user_repo_list.html', context)
+	
 @login_required
 def add_review(request, repo_id):
     repo = get_object_or_404(Project, pk=repo_id)

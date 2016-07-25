@@ -28,7 +28,6 @@ class Recommender(object):
 		watched_with_ids = []
 		for u_id in watchers_ids:
 			ids_per_user = self.get_ids_per_user(u_id)
-			ids_per_user.remove(project_id)
 			for r_id in ids_per_user:
 				if r_id != project_id:
 					watched_with_ids.append(r_id)
