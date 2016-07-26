@@ -1,0 +1,20 @@
+{% extends 'recommendations/repo_list.html' %}
+
+% block title %}
+<h1> Search for Projects</h1>
+{% endblock %}
+{% block content %}
+	<div class="container">
+			<h3>Search for Projects</h3>
+			{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+			<form id="searchform" action="{% url 'recommendations:search_repo' %}" method="get" accept-charset="utf-8">
+				{% buttons %} 
+					<button type="submit" class="searchbutton">
+						<i class="fa fa-search"></i>
+						{% bootstrap_icon "search" %} Search
+					</button>
+				{% endbuttons %} 
+				<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search for ">
+		   </form>
+	</div>
+{% endblock %}

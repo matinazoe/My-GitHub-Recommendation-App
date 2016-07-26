@@ -17,6 +17,7 @@
 		
 		<p><b>Description:</b>	{{repo.description}}</p>
 		<p><b>Published on:</b>	{{repo.created_at}}</p>
+		</p> <b> Owner: </b> <a href="{% url 'recommendations:user_repo_list' repo.owner_id%}">{{ repo.owner_id }}</a>
 	
 	<h3>Recommendations for this Project</h3>
 	{% if recommended_projects %}

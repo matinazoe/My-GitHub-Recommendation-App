@@ -35,7 +35,9 @@ urlpatterns = [
     url(r'^review/user/$', views.user_review_list, name='user_review_list'),
 	# Projects: /repo/
     url(r'^repo$', views.repo_list, name='repo_list'),
-	url(r'^repo/search/$', views.search, name='search_repo'),
+    url(r'^repo/search/$', views.search, name='search_repo'),
+    url(r'^repo/user/$', views.user_repo_list, name='user_repo_list'),
+    url(r'^repo/user/(?P<username>\w+)/$', views.user_repo_list, name='user_repo_list'),
     url(r'^repo/tag/(?P<tag_slug>[-\w]+)/$', views.repo_list, name='repo_list_by_tag'),
     # ex: /repo/5/
     url(r'^repo/(?P<repo_id>\w+)/$', views.repo_detail, name='repo_detail'),

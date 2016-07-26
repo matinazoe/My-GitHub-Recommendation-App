@@ -6,7 +6,6 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
-<!DOCTYPE html>
 
 <html>
     <head>
@@ -24,16 +23,12 @@
 			bottom margin is 0px
 			left margin is 0px
 			}
-			.add-review{
-				margin: 10px;
-				width: 400px
-			}			
 		</style>
 	</head>
 	<div class="jumbotron jumbotron-fluid">
 		 <div class="container">
 			<h1 class="display-3">GitHub Recommendation Engine</h1>
-			<p class="lead">An application to provide recommendations for Github.</p>
+			<p class="lead">This an application to provide recommendations for Github.</p>
 		 </div>
 	</div>		
 	<nav role="navigation" class="navbar navbar-full navbar-inverse">
@@ -51,47 +46,66 @@
 				<li><a href="{% url 'recommendations:homepage' %}">Home</a></li>
 				<li><a href="{% url 'recommendations:repo_list' %}">Repository list</a></li>
 				<li><a href="{% url 'recommendations:review_list' %}">Reviews</a></li>
-				<li><a href="{% url 'recommendations:active_user_list' %}"> Active Users</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 			{% if user.is_authenticated %}
 				<li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Hello {{ user.username }} <b class="caret"></b></a>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="{% url 'recommendations:profile' user.username %}">Hello {{ user.username }} <b class="caret"></b></a>
                     <ul role="menu" class="dropdown-menu">
-                        <li><a href="#"> {{ user.username }}' Profile</a></li>
-                        <li><a href="{% url 'recommendations:user_detail' user.username%}"> {{ user.username }}'s Info</a></li>
-						<li><a href="#">........</a></li>
+                        <li><a href="{% url 'recommendations:profile' user%}"> {{ user.username }}' Profile</a></li>
+                        <li><a href="{% url 'recommendations:user_review_list' user.username %}"> User Reviews</a></li>
+                        <li><a href="#">........</a></li>
                         <li class="divider"></li>
-						<li><a href="{% url 'recommendations:user_review_list' user.username %}"> User Reviews</a></li>
-                        <li><a href="{% url 'recommendations:user_repo_list' user.username %}"> User Repositories</a></li>
+                        <li><a href="#">........</a></li>
                     </ul>
                 </li>
-
+<!--				<li><a href="{% url 'recommendations:user_review_list' user.username %}">Hello {{ user.username }}</a></li> -->
 				<li><a href="{% url 'auth:logout' %}">Logout</a></li>
-			{% else %}
+				{% else %}
 				<li><a href="{% url 'auth:login' %}">Login</a></li>
 				<li><a href="/accounts/register">Register</a></li>
-			{% endif %}
+				{% endif %}
 			</ul>					
 			
 		</div>
 	</nav>
 {% block bootstrap3_content %}
-	
+	<div id="sidebar">
+		<div class="panel-group">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h2>Last Reviews</h2>
+				</div>
+				<div class="panel-body">
+					<p>There are {% total_reviews %} Reviews so far.</p>
+					{% show_last_reviews 2 %}
+				</div>
+			</div>
+		</div>
+<!--		<div class="panel-group">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h2>Highest Rated Projects</h2>
+				</div>
+<!--				<div class="panel-body">//-->
+<!--					{% get_highest_rated_repos as highest_rated_repos %} //-->
+<!--					<ul>
+<!--					{% for repo in highest_rated_repos %}//-->
+<!--						<li>//-->
+<!--							<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.title }}</a>//-->
+<!--						</li>//-->
+<!--					{% endfor %}//-->
+<!--					</ul>//-->
+<!--				</div> //-->
+
+<!--			</div>
+<!--		</div>		//-->
+	</div>
 	<div class="container">
 		<h1>{% block title %}(no title){% endblock %}</h1>
 
 		{% bootstrap_messages %}
-		{% if messages %}
-			<ul class="messages">
-				{% for message in messages %}
-					<li class="{{ message.tags }}">
-						{{ message|safe }}
-						<a href="#" class="close">×</a>
-					</li>
-				{% endfor %}
-			</ul>
-		{% endif %}
+
 		{% block content %}(no content){% endblock %}
 	</div>
 
