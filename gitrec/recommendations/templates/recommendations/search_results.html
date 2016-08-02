@@ -1,7 +1,7 @@
 {% extends 'recommendations/repo_list.html' %}
 
 {% block title %}
-<h1> Search for Projects</h1>
+<h1> Search for Repositories</h1>
 {% endblock %}
 {% block content %}
 	<div class="container">
@@ -34,9 +34,9 @@
 				</p>
 				</p> <b> Owner: </b> <a href="{% url 'recommendations:user_repo_list' repo.owner_id %}">{{ repo.owner_id }}</a>
 				
-				<h5>{{ repo.review_set.count }} reviews </h5>
+				<h6 style="font-family:Lucida Console; font-size:120%;" ><b>{{ repo.review_set.count }} reviews </b></h6>
 
-				<h5>{{ repo.average_rating | floatformat }} average rating</h5>
+				<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>
 			</div>
 			{% endfor %}
 		</div>

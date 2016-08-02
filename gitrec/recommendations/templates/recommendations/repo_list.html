@@ -2,12 +2,12 @@
 
 {% load staticfiles %}
 {% block title %}
-<h1>Projects</h1>
+<h1>Repositories</h1>
 {% endblock %}
 
 {% block content %}
 	<div class="container">
-		<h3>Search for Projects</h3>
+		<h3>Search for Repos</h3>
 		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 		<form id="searchform" action="{% url 'recommendations:search_repo' %}" method="get" accept-charset="utf-8">
 			<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search for ">
@@ -36,9 +36,9 @@
 				</p>
 				</p> <b> Owner: </b> <a href="{% url 'recommendations:user_repo_list' repo.owner_id %}">{{ repo.owner_id }}</a>
 				{% if repo.review_set.count %}
-					<h5>{{ repo.review_set.count }} reviews </h5>
+					<h6 style="font-family:Lucida Console; font-size:110%;" ><b>{{ repo.review_set.count }} reviews </b></h6>
 				
-					<h5>{{ repo.average_rating | floatformat }} average rating</h5>
+					<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>
 				{% else %}
 					 <br> <br>
 					<p>There're no reviews for this repository at the moment.</p>
