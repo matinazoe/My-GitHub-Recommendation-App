@@ -16,7 +16,10 @@
 		{% for review in latest_review_list %}
 
 			<div class="col-xs-6 col-lg-4">
-				<h2 style="font-family:Comic Sans MS;"><a href="{% url 'recommendations:review_detail' review.id %}" >{{ review.title }}</a></h2>
+				<li><h4><a href="{% url 'recommendations:review_detail' review.id %}"> review for {{ review.repo.name }}	</a></h4></li>
+				<h6>rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a></h6>
+
+				<h5 style="font-family:Comic Sans MS;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
 					<p class="tags">
 						Tags: 
 						{% for tag in review.tags.all %}
@@ -24,11 +27,8 @@
 							{% if not forloop.last %}, {% endif %}
 						{% endfor %}
 					</p>
-								
-				<li><h4><a href="{% url 'recommendations:review_detail' review.id %}"> review for {{ review.repo.name }}	</a></h4></li>
-				
-				<h6>rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a></h6>
-					<p>{{ review.comment}}</p>
+
+					<p id="r_comment">{{ review.comment}}</p>
 					<p class="date"> Published {{ review.pub_date }} </p>
 			</div>
 		{% endfor %}

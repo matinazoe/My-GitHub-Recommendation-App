@@ -1,14 +1,16 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.views.generic import ListView, DetailView
 from django.db.models import Count
+from django.db.models import Q
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
@@ -20,6 +22,8 @@ from .forms import ReviewForm
 from .recommender import Recommender
 
 import datetime
+import operator
+
 
 def homepage(request):
     homepage_review_list = Review.objects.order_by('-pub_date')[:3]
@@ -67,7 +71,7 @@ def user_detail(request, user_id):
 # Review Views
     
 def review_list(request, tag_slug=None):
-    latest_review_list = Review.objects.order_by('pub_date')[:9]
+    latest_review_list = Review.objects.order_by('pub_date')
     tag = None
 
     if tag_slug:
@@ -86,7 +90,7 @@ def review_list(request, tag_slug=None):
     return render(request, 'recommendations/review_list.html', {'latest_review_list':latest_review_list, 'page':page, 'tag': tag})
 
 def latest_reviews(request, tag_slug=None):
-    latest_review_list = Review.objects.order_by('pub_date')
+    latest_review_list = Review.objects.order_by('pub_date')[:9]
     tag = None
 
     if tag_slug:
@@ -195,16 +199,35 @@ def add_review(request, repo_id):
 
     return render(request, 'recommendations/add_repo_review.html', {'repo': repo, 'form': form})
 
-def search(request):
-    query_string = ''
-    found_entries = None
+def search_repo(request):
+    query = ''
+    results = None
     if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        
-        entry_query = get_query(query_string, ['name', 'description',])
-        
-        found_entries = Project.objects.filter(entry_query).order_by('-created_at')
+#        query_string = request.GET['q']
+        query = request.GET.get('q')
+		
+    results = Project.objects.filter(Q(name__icontains=query) | Q(description__icontains=query)).order_by('created_at')
 
-    return render_to_response('search/search_results.html',
-                          { 'query_string': query_string, 'found_entries': found_entries },
-                          context_instance=RequestContext(request))
+    return render(request, 'recommendations/search_results.html', { 'query': query, 'results': results})
+
+
+class RepoSearchListView(ListView):
+    """
+    Display a Blog List page filtered by the search query.
+    """
+    paginate_by = 6
+
+    def get_queryset(self):
+        result = super(RepoSearchListView, self).get_queryset()
+
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                       (Q(name__icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                       (Q(description__icontains=q) for q in query_list))
+            )
+
+        return result						  

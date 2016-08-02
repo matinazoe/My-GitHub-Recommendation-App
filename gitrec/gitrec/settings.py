@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'recommendations',
     'registration',
     'taggit',
+#    'social_auth',
 ]
 
 MIDDLEWARE_CLASSES = [

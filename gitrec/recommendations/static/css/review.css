@@ -36,15 +36,20 @@ h3 {
 	background: #1a1a1a  no-repeat fixed center;
 }
 h4 {
-    color: #330033;
+    color:#1fada6;
 	padding-right: 15px;
 	font:  bold 15px/30px Verdana;
 	font-style: normal;
-	background: #E8E8E8 url("smiley.gif") no-repeat fixed center;
+	background: #FFEFD5 url("smiley.gif") no-repeat fixed center;
 }
+h5 {
+    color: #1a1aff;
+    font:  bold 16px/30px Lucida Console, serif;
+}
+
 h6 a {
     color: #0080ff;
-    font:  bold 14px/30px cursive, serif;
+    font:  bold 15px/30px cursive, serif;
 	font-style: oblique;
 }
 
@@ -58,7 +63,11 @@ h7 {
     text-align: left;
     color: red;
 }
-
+.date{
+    font-style: normal;
+	text-align: left;
+    color: #4B0082;
+}
 p {
     font-family: Geneva, Georgia, Serif;
 	font-style: italic;
@@ -86,6 +95,14 @@ p {
     overflow:auto;
     padding:10px;
 }
+#r_comment {
+    font:Comic Sans MS;
+	color: black;
+	background: #E8E8E8 url("smiley.gif") no-repeat fixed center;
+    padding-left:20px;
+
+}
+
 hr { 
     display: block;
     margin-top: 0.5em;

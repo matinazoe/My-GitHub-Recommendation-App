@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from . import views
+from .views import RepoSearchListView
 
 urlpatterns = [
     # ex: /
@@ -29,13 +30,15 @@ urlpatterns = [
     url(r'^review/(?P<review_id>\w+)/$', views.review_detail, name='review_detail'),
     url(r'^review/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<review>[-\w]+)/$', views.review_detail_slug, name='review_detail_slug'),
     url(r'^review/tag/(?P<tag_slug>[-\w]+)/$', views.review_list, name='review_list_by_tag'),
-    url(r'^review/repo//(?P<repo_id>\w+)/$', views.reviews_by_repo, name='reviews_by_repo'),
+    url(r'^review/repo/(?P<repo_id>\w+)/$', views.reviews_by_repo, name='reviews_by_repo'),
+#	url(r'^reviews/repo/(?P<repo_id>\w+)/$', views.repo_review_list, name='repo_review_list'),
 	# ex: /review/user - get reviews for the logged user
     url(r'^review/user/(?P<username>\w+)/$', views.user_review_list, name='user_review_list'),
     url(r'^review/user/$', views.user_review_list, name='user_review_list'),
 	# Projects: /repo/
     url(r'^repo$', views.repo_list, name='repo_list'),
-    url(r'^repo/search/$', views.search, name='search_repo'),
+    url(r'^repo/search/$', views.search_repo, name='search_repo'),
+#    url(r'^repo/search/$', RepoSearchListView.as_view(), name='search_repo_list'),
     url(r'^repo/user/$', views.user_repo_list, name='user_repo_list'),
     url(r'^repo/user/(?P<username>\w+)/$', views.user_repo_list, name='user_repo_list'),
     url(r'^repo/tag/(?P<tag_slug>[-\w]+)/$', views.repo_list, name='repo_list_by_tag'),

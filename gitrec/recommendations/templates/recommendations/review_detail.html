@@ -2,14 +2,15 @@
 
 {% load staticfiles %}
 {% block title %}
-<h2 style="font-family:Comic Sans MS;">{{ review.title }}</h2>
-<p class="tags">Tags: {{ review.tags.all|join:", " }}</p>
+
 <h4><a href="{% url 'recommendations:repo_detail' review.repo.id %}">{{ review.repo.name }}</a></h4>
+<h5 style="font-family:Comic Sans MS;">Review Title: "<i>{{ review.title }}</i>"</h5>
+<p class="tags">Tags: {{ review.tags.all|join:", " }}</p>
 {% endblock %}
 
 {% block content %}
 
-	<h4>Rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_detail' review.user_name %}" >{{ review.user_name }}</a></h4>
-	<p>{{ review.pub_date }}</p>
-	<p>{{ review.comment }}</p>
+	<h6>Rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_detail' review.user_name %}" >{{ review.user_name }}</a></h6>
+	<p class="date"> Published {{ review.pub_date }}</p>
+	<p id="r_comment">{{ review.comment }}</p>
 {% endblock %}
