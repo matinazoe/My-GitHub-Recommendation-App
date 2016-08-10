@@ -20,6 +20,7 @@ from taggit.models import Tag
 from .models import Review, Project
 from .forms import ReviewForm
 from .recommender import Recommender
+from .u_recommender import U_recommender
 
 import datetime
 import operator
@@ -63,9 +64,13 @@ def active_user_list(request):
 
 @login_required
 def user_detail(request, user_id):
+    if not user_id:
+        user_id = request.user.user_id
     user = get_object_or_404(User, pk=user_id, is_active=True)
+    r = U_recommender()
+    recommended_users = r.suggest_users(user, 4)
     return render(request, 'recommendations/user/user_detail.html', {'section': 'active_users',
-                                                        'user': user})													  	
+                                                        'user': user, 'recommended_users':recommended_users})													  	
 
 
 # Review Views

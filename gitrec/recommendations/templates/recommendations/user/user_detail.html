@@ -3,22 +3,47 @@
 {% block title %}{{ user.get_full_name }}{% endblock %}
 
 {% block content %}
-    <
     <div class="profile-info">
 		
 		
 		<div class="info">
-			<p title="I'm a tooltip"> <b>user:</b>{{ user.username }} </p>
+			<p style="color:#2626c0; font-family:verdana; background-color:#c6ecd7; font-size:100%"> <b>user: </b>{{ user.username }} </p>
 			<p> <b>user email:</b>{{ user.email }} </p>
-			<p> <b>GitHub user:</b><a href="{{ user.profiled.get_GitHub_url }}" class="title">{{ user.username }}</a></p>
-			<p> <b>GitHub page: </b><a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></p>
-			
+			<p> <b>GitHub user: <a href="{{ user.profiled.get_GitHub_url }}" class="title">{{ user.username }}</a></b></p>
+			<p> <b>GitHub page: <a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></b></p>
+			{% with total_followers=user.all_followers.count %}
+				<span class="count">
+				<span class="total">{{ total_followers }}</span>
+				follower{{ total_followers|pluralize }}
+				</span>
+			{% endwith %}
+			<li><a href="{% url 'recommendations:user_repo_list' user.username %}"> User Repositories</a></li>
 		</div>
     </div>
-    {% with total_followers=user.all_followers.count %}
-        <span class="count">
-            <span class="total">{{ total_followers }}</span>
-            follower{{ total_followers|pluralize }}
-        </span>
-    {% endwith %}
+    
+	
+
+	<h3>User's followers also follow</h3>
+	{% if recommended_users %}
+		<div class="recommendations">
+			
+			<div class="row">
+				{% for r_user in recommended_users %}
+					<div class="col-xs-6 col-lg-4">
+						
+						<div class = "user_details">
+							<p style="font-family:verdana; background-color:#c6ecd7; font-size:90%"> <b>user: <a style="font-style: oblique; font-size:100%;" href="{% url 'recommendations:user_detail' r_user.id%}">{{ r_user.username }} </a></b></p>
+							<p> <em> {{ r_user.get_full_name }} </em> </p>
+							<p> <b>user email:</b> {{ r_user.email }} </p>
+							<p> <b>GitHub page:  <a href="https://github.com/{{ r_user.username }}">https://github.com/{{ r_user.username }} </a></b></p>
+						</div>
+					<hr>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% else %}
+		<p>There are no recommendations for this User</p>
+	{% endif %}
+	
 {% endblock %}

@@ -10,9 +10,12 @@
 				<div id="user-list">
 					{% for user in users %}
 						<div class=" col-xs-6 col-md-4 col-lg-3">
-							<p style="font-family:verdana; background-color:#c6ecd7"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' user.id%}">{{ user.username }} </b> </a> </p> 
-							<p> {{ user.get_full_name }} </p>
-							<p> {{ user.email }} </p>
+							<div class = "user_details">
+								<p style="font-family:verdana; background-color:#c6ecd7"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' user.id%}">{{ user.username }} </b> </a> </p> 
+								<p> {{ user.get_full_name }} </p>
+								<p> {{ user.email }} </p>
+								<p style="font-size:85%"> <b>GitHub page: <a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></b></p>
+							</div>
 							<hr>	
 						</div>
 					{% endfor %}

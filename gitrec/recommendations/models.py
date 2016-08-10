@@ -46,7 +46,7 @@ class Followers(models.Model):
         return '{} follows {}'.format(self.follower_id,self.user_id)
 		
 		
-User.add_to_class('followers', models.ManyToManyField('self',
+User.add_to_class('following', models.ManyToManyField('self',
                                                       through=Followers, 
 													  related_name='all_followers',
 													  symmetrical=False))
