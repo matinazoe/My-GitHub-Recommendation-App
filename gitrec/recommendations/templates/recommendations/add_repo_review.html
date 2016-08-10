@@ -3,14 +3,20 @@
 
 {% block title %}
 	<div>
-		<h2>{{ repo.name }}</h2>
-		<p class="tags">Tags: {{ repo.tags.all|join:", " }}</p>
-		<h5>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h5>
+		<h4><a href="{% url 'recommendations:repo_detail' repo.id %}"> {{ repo.name }}</a></h4>
+
 	</div>
 {% endblock %}
 
 {% block content %}
-
+		<p class="tags">
+					Tags: 
+					{% for tag in repo.tags.all %}
+						<a href="{% url 'recommendations:repo_list_by_tag' tag.slug %}">{{ tag.name }}</a>
+						{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+				</p>
+		<h6>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
 	<h3>Add your review</h3>
 	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 

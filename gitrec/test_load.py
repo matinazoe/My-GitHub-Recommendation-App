@@ -16,7 +16,7 @@ from taggit.models import TaggedItem
 from recommendations.models import Review, Project
 
 doom=get_object_or_404(Project, id=152)
-
+tagcplus=Tag.objects.get_or_create(name=language) 
 tag152=get_object_or_404(TaggedItem, name=language)
 print tag152.id
 	

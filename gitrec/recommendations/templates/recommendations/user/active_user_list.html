@@ -4,24 +4,22 @@
 {% block title %}Active Users{% endblock %}
 
 {% block content %}
-	<div class="container">	
+	
 		{% if users %}
 			<div class="row">
 				<div id="user-list">
-					<div class="col-xs-6 col-lg-4">
-						{% for user in users %}
-							<div class="active-users">
-								<p style="font-family:verdana;"><b> username: </b><a href="{% url 'recommendations:user_detail' user.id%}">{{ user.username }}</a> </p> 
-								<p> {{ user.get_full_name }} </p>
-								<p> {{ user.email }} </p>
+					{% for user in users %}
+						<div class=" col-xs-6 col-md-4 col-lg-3">
+							<p style="font-family:verdana; background-color:#c6ecd7"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' user.id%}">{{ user.username }} </b> </a> </p> 
+							<p> {{ user.get_full_name }} </p>
+							<p> {{ user.email }} </p>
 							<hr>	
-							</div>
-						{% endfor %}
-					</div>
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 		{% else %}
 			<p>No users are active.</p>
 		{% endif %}
-	</div>
+	
 {% endblock %}

@@ -1,3 +1,7 @@
+.jumbotron {
+    background: "navy-blue-wallpaper.jpg";
+}
+
 .page-header {
     background-color: #20B2AA;
     margin-top: 0;
@@ -20,6 +24,8 @@ h1 {
 	font-family: 'Lobster';
 }
 body {
+	background: #d9d9d9 url("grey-back.jpg") no-repeat right bottom;
+
     padding-left: 12px;
 }
 h2 a {
@@ -47,11 +53,7 @@ h5 {
     font:  bold 16px/30px Lucida Console, serif;
 }
 
-h6 a {
-    color: #0080ff;
-    font:  bold 15px/30px cursive, serif;
-	font-style: oblique;
-}
+
 
 h7 { 
 	font-family: 'Muli', sans-serif; font-weight:normal; 
@@ -98,7 +100,7 @@ p {
 #r_comment {
     font:Comic Sans MS;
 	color: black;
-	background: #E8E8E8 url("smiley.gif") no-repeat fixed center;
+	
     padding-left:20px;
 
 }

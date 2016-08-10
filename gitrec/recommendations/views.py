@@ -168,8 +168,8 @@ def user_repo_list(request, username=None):
     if not username:
         username = request.user.username
     user = get_object_or_404(User, username=username)
-    repo_list = Project.objects.filter(owner_id=user).order_by('-created_at')
-    context = {'repo_list':repo_list, 'username':username}
+    repos = Project.objects.filter(owner_id=user).order_by('-created_at')
+    context = {'repos':repos, 'username':username}
     return render(request, 'recommendations/user_repo_list.html', context)
 	
 @login_required

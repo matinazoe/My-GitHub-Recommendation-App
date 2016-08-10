@@ -1,4 +1,4 @@
-{% extends 'recommendations/repo_list.html' %}
+{% extends 'base.html' %}
 
 {% load staticfiles %}
 {% block title %}
@@ -11,7 +11,7 @@
 			{% if tag %}
 				<h2>Projects tagged with "{{ tag.name }}"</h2>
 			{% endif %}
-			{% for repo in repos %}
+			{% for repo in repo_list %}
 			<div class="col-xs-6 col-lg-4">
 				<h4><a href="{% url 'recommendations:repo_detail' repo.id %}">
 				{{ repo.name }}</a></h4>
@@ -22,16 +22,10 @@
 						{% if not forloop.last %}, {% endif %}
 					{% endfor %}
 				</p>
-				<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
-				<p><b>Description:</b>	{{repo.description}}</p>
-				<p><b>Published on:</b>	{{repo.created_at}}</p>
-				{% if repo.review_set.count %}
-					<h6 style="font-family:Lucida Console; font-size:110%;" ><b>{{ repo.review_set.count }} reviews </b></h6>
-									<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>
-				{% else %}
-					 <br> 
-					<p>There're no reviews for this repository at the moment.</p>
-				{% endif %}
+				</p> <b> Owner: </b> <a href="{% url 'recommendations:user_repo_list' repo.owner_id %}">{{ repo.owner_id }}</a>
+				
+				<h5>{{ repo.review_set.count }} reviews </h5>
+				<h5>{{ repo.average_rating | floatformat }} average rating</h5>
 			</div>
 			{% endfor %}
 		</div>

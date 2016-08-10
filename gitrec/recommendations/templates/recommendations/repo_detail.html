@@ -12,13 +12,17 @@
 			Tags: {{ repo.tags.all|join:", " }}
 		</p>
 	</div>
-	<h6>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
-		<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
-		
-		<p><b>Description:</b>	{{repo.description}}</p>
-		<p><b>Published on:</b>	{{repo.created_at}}</p>
-		</p> <b> Owner: </b> <a href="{% url 'recommendations:user_repo_list' repo.owner_id%}">{{ repo.owner_id }}</a>
+	{% if repo.review_set.all %}
+		<h6>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
+	{% else %}
+		<p> Not rated yet</p>
+	{% endif %}
+	<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
 	
+	<p><b>Description:</b>	{{repo.description}}</p>
+	<p><b>Published on:</b>	{{repo.created_at}}</p>
+	<b> Owner:  <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_repo_list' repo.owner_id%}">{{ repo.owner_id }}</b></a>
+
 	<h3>Recommendations for this Repository</h3>
 	{% if recommended_projects %}
 		<div class="recommendations">
@@ -26,8 +30,8 @@
 			<div class="row">
 				{% for repo in recommended_projects %}
 					<div class="col-xs-6 col-lg-4">
-						<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }}</a>
-						<p>url:	<a href="{{repo.url}}"></a>{{repo.url}}</p>
+						<b> <a style="color:#008080; font-style: oblique; font-size:110%;" href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }} </b> </a>
+						<p>url:	<a href="{{repo.url}}">{{repo.url}}</a></p>
 						
 					</div>
 				{% endfor %}
@@ -41,12 +45,12 @@
 	<div class="row">
 		{% for repo in similar_repos %}
 			<div class="col-xs-6 col-lg-4">
-				<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }}</a>
-				<p>url:	<a href="{{repo.url}}"></a>{{repo.url}}</p>
+				<b> <a style="color:#008080; font-style: oblique; font-size:110%;" href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }} </b> </a>
+				<p>url:	<a href="{{repo.url}}">{{repo.url}}</a></p>
 			</div>
 		
 		{% empty %}
-			There are no similar repos yet.
+			<p style="padding:12px;"> There are no similar repos yet.</p>
 		{% endfor %}
 	</div>
 	<h3>Recent reviews</h3>
@@ -61,7 +65,7 @@
 			{% endfor %}
 		</div>
 	{% else %}
-		<p>No reviews for this repo yet</p>
+		<p>There're no reviews for this repository at the moment.</p>
 	{% endif %}
 
 	<div class="add-review">

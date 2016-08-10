@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
 
+
 {% block title %}
 <h1>Published Reviews and Ratings</h1>
 {% endblock %}
@@ -16,19 +17,11 @@
 		{% for review in latest_review_list %}
 
 			<div class="col-xs-6 col-lg-4">
-				<li><h4>  {{ review.repo.name }}: <a href="{% url 'recommendations:reviews_by_repo' review.repo_id %}">Reviews	</a></h4></li>
-				<h6>rated {{ review.rating }} of 5 by <a href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a></h6>
+				<li><h4>  {{ review.repo.name }}: <a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' review.repo_id %}">Reviews	</a></h4></li>
+				<h6>rated {{ review.rating }} of 5 by <b> <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a> </b><h6>
 
-				<h5 style="font-family:Comic Sans MS;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
-					<p class="tags">
-						Tags: 
-						{% for tag in review.tags.all %}
-							<a href="{% url 'recommendations:review_list_by_tag' tag.slug %}"> {{ tag.name }} </a>
-							{% if not forloop.last %}, {% endif %}
-						{% endfor %}
-					</p>
-
-					<p id="r_comment">{{ review.comment|ellipses:30}}</p>
+				<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
+					<p id="r_comment">"{{ review.comment}}"</p>
 					<p class="date"> Published {{ review.pub_date }} </p>
 			</div>
 		{% endfor %}

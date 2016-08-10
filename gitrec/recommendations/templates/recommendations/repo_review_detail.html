@@ -10,7 +10,11 @@
 {% block content %}
 	<div class="tags">
 		<p class="tags">
-			Tags: {{ repo.tags.all|join:", " }}
+			Tags: 
+			{% for tag in review.tags.all %}
+				<a href="{% url 'recommendations:review_list_by_tag' tag.slug %}"> {{ tag.name }} </a>
+				{% if not forloop.last %}, {% endif %}
+			{% endfor %}
 		</p>
 	</div>	
 	<h6>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
@@ -22,8 +26,8 @@
 		{% for review in repo.review_set.all %}
 		<div class="col-xs-6 col-lg-4">
 			<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
-			<em>{{ review.comment }}</em>
-			<h6>Rated {{ review.rating }} of 5 by {{ review.user_name }}</h6>
+			<p id="r_comment">"{{ review.comment}}"</p>
+			<h6>Rated {{ review.rating }} of 5 by {{ review.user_name }}<h6>
 			<h6><a href="{% url 'recommendations:review_detail' review.id %}">
 			Read more
 			</a></h6>
@@ -35,16 +39,30 @@
 	<p>No reviews for this repo yet</p>
 {% endif %}
 
-<h5><a href="{% url 'recommendations:add_review' repo.id %}">Add your review</h3>
 
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-	<h2>Similar Projects</h2>
-	{% for repo in similar_repos %}
-		<p>
-		<a href="{{ repo.get_absolute_url }}">{{ repo.title }}</a>
-		</p>
-	{% empty %}
-		There are no similar posts yet.
-	{% endfor %}	
+
+	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<h3> Repositories also reviewed</h3>
+	<div class="row">
+		{% for repo in similar_repos %}
+			<div class="col-xs-6 col-lg-4">
+				<b> <a style="color:#008080; font-style: oblique; font-size:110%;" href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }} </b> </a>
+				<p>url:	<a href="{{repo.url}}">{{repo.url}}</a></p>
+			</div>
+		
+		{% empty %}
+			<p style="padding:13px;"> There are no similar repos yet.</p>
+		{% endfor %}
+	</div>
+	<div class="add-review">
+		<div class="panel panel-default">
+			<div class="panel-body">If you want to post your opinion for this Repository </div> 
+			<div class="panel-footer clearfix">
+				<div class="pull-left">
+					<a href="{% url 'recommendations:add_review' repo.id %}" class="btn btn-primary">Add your review</a>
+				</div>
+			</div>
+		</div>
+	</div>	
 {% endblock %}
