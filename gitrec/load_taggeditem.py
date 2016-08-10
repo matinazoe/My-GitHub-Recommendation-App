@@ -8,7 +8,7 @@ import django
 django.setup()
 
 from recommendations.models import Project
-from taggit.models import Taggeditem
+from taggit.models import TaggedItem
 
 def save_tag_from_row(taggeditem_row):
     taggeditem = Taggeditem()

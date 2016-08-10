@@ -3,26 +3,30 @@
 
 {% block title %}
 	<div>
-		<h2>{{ repo.name }}</h2>
-		<p class="tags">Tags: {{ repo.tags.all|join:", " }}</p>
-		<h5>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h5>
+		<h4>{{ repo.name }}</h4>
 	</div>
 {% endblock %}
 
 {% block content %}
-	
-
+	<div class="tags">
+		<p class="tags">
+			Tags: {{ repo.tags.all|join:", " }}
+		</p>
+	</div>	
+	<h6>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
+		<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
 <h3>Recent reviews</h3>
 
 {% if repo.review_set.all %}
 	<div class="row">
 		{% for review in repo.review_set.all %}
 		<div class="col-xs-6 col-lg-4">
+			<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
 			<em>{{ review.comment }}</em>
 			<h6>Rated {{ review.rating }} of 5 by {{ review.user_name }}</h6>
-			<h5><a href="{% url 'recommendations:review_detail' review.id %}">
+			<h6><a href="{% url 'recommendations:review_detail' review.id %}">
 			Read more
-			</a></h5>
+			</a></h6>
 
 		</div>
 		{% endfor %}

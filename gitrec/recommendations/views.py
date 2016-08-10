@@ -120,6 +120,14 @@ def user_review_list(request, username=None):
     latest_review_list = Review.objects.filter(user_name=user).order_by('-pub_date')
     context = {'latest_review_list':latest_review_list, 'username':username}
     return render(request, 'recommendations/user_review_list.html', context)
+
+
+def reviews_by_repo(request, repo_id):
+    if not repo_id:
+        repo_id = request.repo.id
+    repo = get_object_or_404(Project, id=repo_id)
+    latest_review_list = Review.objects.filter(repo=repo).order_by('-pub_date')
+    return render(request, 'recommendations/repo_review_detail.html', {'latest_review_list':latest_review_list, 'repo': repo})
 	
 
 def review_detail_slug(request, year, month, day, review):
@@ -155,15 +163,6 @@ def repo_detail(request, repo_id):
     r = Recommender()
     recommended_projects = r.suggest_projects_for(repo, 4)
     return render(request, 'recommendations/repo_detail.html', {'repo': repo, 'similar_repos':similar_repos, 'recommended_projects':recommended_projects})
-
-def reviews_by_repo(request, repo_id):
-    if not repo_id:
-        repo_id = request.repo.id
-    repo_review_list = Review.objects.filter(repo=repo_id).order_by('-pub_date')
-    repo_tags_ids = repo.tags.values_list('id', flat=True)
-    similar_repos = Project.objects.filter(tags__in=repo_tags_ids).exclude(id=repo.id)
-    similar_repos = similar_repos.annotate(same_tags=Count('tags')).order_by('-same_tags','-user_name')[:4]
-    return render(request, 'recommendations/repo_review_detail.html', {'latest_review_list':latest_review_list, 'repo': repo, 'similar_repos':similar_repos})
 
 def user_repo_list(request, username=None):
     if not username:
