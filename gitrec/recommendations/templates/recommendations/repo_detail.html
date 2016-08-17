@@ -19,8 +19,8 @@
 	{% endif %}
 	<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
 	
-	<p><b>Description:</b>	{{repo.description}}</p>
-	<p><b>Published on:</b>	{{repo.created_at}}</p>
+	<p><b>Description:</b>	"{{repo.description}}"</p>
+	<p><b>Created at:</b>	{{repo.created_at}}</p>
 	<b> Owner:  <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_repo_list' repo.owner_id%}">{{ repo.owner_id }}</b></a>
 
 	<h3>Recommendations for this Repository</h3>

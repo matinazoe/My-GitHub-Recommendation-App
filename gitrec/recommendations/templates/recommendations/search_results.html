@@ -4,7 +4,7 @@
 <h1> Search for Repositories</h1>
 {% endblock %}
 {% block content %}
-	<div class="container">
+	<div class="container_search">
 		<h3>Search for Projects</h3>
 		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 		<form id="searchform" action="{% url 'recommendations:search_repo' %}" method="get" accept-charset="utf-8">
@@ -34,9 +34,14 @@
 				</p>
 				</p> <b> Owner: </b> <a href="{% url 'recommendations:user_repo_list' repo.owner_id %}">{{ repo.owner_id }}</a>
 				
-				<h6 style="font-family:Lucida Console; font-size:120%;" ><b>{{ repo.review_set.count }} reviews </b></h6>
-
-				<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>
+				{% if repo.review_set.count %}
+					<h6 style="font-family:Lucida Console; font-size:100%;" ><b>{{ repo.review_set.count }} <a href="{% url 'recommendations:reviews_by_repo' repo.id %}">review{{ repo.review_set.count|pluralize }}</a> </b></h6>
+				
+					<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>
+				{% else %}
+					 <br> <br>
+					<p>There're no reviews for this repository at the moment.</p>
+				{% endif %}
 			</div>
 			{% endfor %}
 		</div>

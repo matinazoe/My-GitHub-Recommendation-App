@@ -11,12 +11,14 @@
 
 <html>
     <head>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="{% static 'css/review.css' %}">
-		<link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/review.css' %}" media="screen">
+		<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         <title>GitHub Recommendation Engine</title>
 		<style type="text/css">
@@ -29,14 +31,19 @@
 			.add-review{
 				margin: 10px;
 				width: 400px
-			}			
+			}
+			body {
+				
+				background-image: url(% static 'images/grey-back.jpg');
+				background-size: cover;
+			}
 		</style>
 	</head>
-	<body  background= 'navy-blue-wallpaper.jpg'>
+	<body>
 	<div class="jumbotron jumbotron-fluid" >
 		 <div class="container">
 			<h1 class="display-3">
-				<img src="{% static 'globe-on-blue.jpg' %}" style="width:128px;height:100px;" /> GitHub Recommendation Engine
+				<img src="{% static 'images/globe-on-blue.jpg' %}" style="width:128px;height:100px;" /> GitHub Recommendation Engine
 			</h1>
 			<p class="lead" style="padding-left: 130px">An application to provide recommendations for Github.</p>
 		 </div>
@@ -49,11 +56,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{% url 'recommendations:homepage' %}">Home</a>
+			<a class="navbar-brand" href="{% url 'recommendations:homepage' %}"></span> Home</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="{% url 'recommendations:repo_list' %}">Repository list</a></li>
+				<li><a href="{% url 'recommendations:repo_list' %}"> Repository list</a></li>
 				<li><a href="{% url 'recommendations:review_list' %}">Reviews</a></li>
 				<li><a href="{% url 'recommendations:active_user_list' %}"> Active Users</a></li>
 			</ul>
@@ -71,9 +78,9 @@
                     </ul>
                 </li>
 
-				<li><a href="{% url 'auth:logout' %}">Logout</a></li>
+				<li><a href="{% url 'auth:logout' %}"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
 			{% else %}
-				<li><a href="{% url 'auth:login' %}">Login</a></li>
+				<li><a href="{% url 'auth:login' %}"><span class="glyphicon glyphicon-user"></span>  Login</a></li>
 				<li><a href="/accounts/register">Register</a></li>
 			{% endif %}
 			</ul>					

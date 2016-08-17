@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block content %}
- 	<p> In this project are included  <strong> {% total_repos %} GitHub repositories </strong> in total from <strong>{% total_users %} users </strong></p>
-		<div id="sidebar">
+
+	<div id="sidebar_right">
 		<div class="panel-group">
-			<div class="panel panel-info">
+			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h2>Most Reviewed Repositories</h2>
+					<b> <i> Most Reviewed Repositories </i></b>
 				</div>
 				<div class="panel-body">
 					{% get_most_reviewed_repos as most_reviewed_repos %} 
@@ -24,30 +24,85 @@
 					</ul>
 				</div> 
 			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<b> <i> Most Watched Repositories </i></b>
+				</div>
+				<div class="panel-body">
+					{% get_most_watched_repos as most_watched_repos %} 
+					<ul>
+					{% for repo in most_watched_repos %}
+						<li>
+							<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }}</a>:<a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' repo.id %}"> <i>Reviews</i>	</a>
+						</li>
+					{% endfor %}
+					</ul>
+				</div> 
+			</div>		
 		</div>		
 	</div>
-	<div >
-		<h3><a href="#">Last reviews</a></h3>
-	</div>	
-	{% if homepage_review_list %}
-	<div>
-		{% for review in homepage_review_list %}
-			<div class="col-xs-6 col-lg-4">
-				<li><h4>  {{ review.repo.name }}: <a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' review.repo_id %}">Reviews	</a></h4></li>
-				<h6>rated {{ review.rating }} of 5 by <b> <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a> </b><h6>
+	<div id="sidebar_left">
+		<p> In this project <strong> {% total_repos %} GitHub repositories </strong> are included in total from <strong>{% total_users %} users </strong></p>
+		<div class="container_search">
+			<h5>Search for Repositories</h5>
+			{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+			<form id="searchform" action="{% url 'recommendations:search_repo' %}" method="get" accept-charset="utf-8">
+				<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search for ">
+				<button type="submit" class="btn btn-info">
 
-				<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
-					<p id="r_comment">"{{ review.comment|truncatewords:3 }}"</p>
-					<p class="date"> Published {{ review.pub_date }} </p>
+					<span class="glyphicon glyphicon-search"></span> Search
+				</button>
+
+			</form>
+		</div>
+		<div class = "popular_users">
+			<div >
+				<h3>Most Popular Users</h3>
+			</div>	
+			<div class="row">
+				{% get_most_followed_users as most_followed_users %}
+				<div>
+				{% for user in most_followed_users %}
+					<div class=" col-xs-6 col-lg-4">
+						<div class = "user_details">
+							<p style="font-family:verdana; background-color:#c6ecd7"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' user.id%}">{{ user.username }} </b> </a> </p> 
+							<p> {{ user.get_full_name }} </p>
+							<p> {{ user.email }} </p>
+							<p style="font-size:85%"> <b>GitHub page: <a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></b></p>
+						</div>	
+					</div>
+				{% endfor %}
+				</div>
 			</div>
-		{% endfor %}
+		</div>
+		<hr>
+		<div class = "last_reviews">
+			<div >
+				<h3>Last reviews</h3>
+			</div>	
+			<div class="row">
+			{% if homepage_review_list %}
+			<div>
+				{% for review in homepage_review_list %}
+					<div class="col-xs-6 col-lg-4">
+						<li><h4>  {{ review.repo.name }}: <a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' review.repo_id %}">Reviews	</a></h4></li>
+						<h6>rated {{ review.rating }} of 5 by <b> <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a> </b><h6>
+
+						<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
+							<p id="r_comment">"{{ review.comment|truncatewords:3 }}"</p>
+							<p class="date"> Published {{ review.pub_date }} </p>
+					</div>
+				{% endfor %}
+			</div>
+			{% else %}
+			<p>No reviews are available.</p>
+			{% endif %}
+			</div>
+		</div>
 	</div>
-	{% else %}
-	<p>No reviews are available.</p>
-	{% endif %}
 {% endblock %}
 
 
-<!--<h2>Latest reviews</h2> -->
+
 
 

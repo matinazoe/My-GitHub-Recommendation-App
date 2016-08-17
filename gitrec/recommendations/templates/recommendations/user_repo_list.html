@@ -24,7 +24,7 @@
 				</p>
 				<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
 				<p><b>Description:</b>	{{repo.description}}</p>
-				<p><b>Published on:</b>	{{repo.created_at}}</p>
+				<p><b>Created at:</b>	{{repo.created_at}}</p>
 				{% if repo.review_set.count %}
 					<h6 style="font-family:Lucida Console; font-size:110%;" ><b>{{ repo.review_set.count }} reviews </b></h6>
 									<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>

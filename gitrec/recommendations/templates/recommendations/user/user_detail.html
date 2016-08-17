@@ -1,26 +1,24 @@
 {% extends "base.html" %}
+{% load recommendations_tags %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
 
 {% block content %}
-    <div class="profile-info">
-		
-		
-		<div class="info">
-			<p style="color:#2626c0; font-family:verdana; background-color:#c6ecd7; font-size:100%"> <b>user: </b>{{ user.username }} </p>
-			<p> <b>user email:</b>{{ user.email }} </p>
-			<p> <b>GitHub user: <a href="{{ user.profiled.get_GitHub_url }}" class="title">{{ user.username }}</a></b></p>
-			<p> <b>GitHub page: <a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></b></p>
-			{% with total_followers=user.all_followers.count %}
-				<span class="count">
-				<span class="total">{{ total_followers }}</span>
-				follower{{ total_followers|pluralize }}
-				</span>
-			{% endwith %}
-			<li><a href="{% url 'recommendations:user_repo_list' user.username %}"> User Repositories</a></li>
+    <div id="container_user">
+		<div class="profile-info">
+			<div class="info">
+				<p style="color:#2626c0; font-family:verdana; background-color:#c6ecd7; font-size:100%"> <b>user: </b>{{ user.username }} </p>
+				<p> <b>user email:</b>{{ user.email }} </p>
+				<p> <b>GitHub user: <a href="{{ user.profiled.get_GitHub_url }}" class="title">{{ user.username }}</a></b></p>
+				<p> <b>GitHub page: <a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></b></p>
+				{% user_followers user as total_followers%}
+				<span class="total">{{ total_followers }}</span> follower{{ total_followers|pluralize }}
+				<div class="pull-right">
+					<a href="{% url 'recommendations:user_repo_list' user.username %}" class="btn btn-primary"> User Repositories</a>
+				</div>
+			</div>
 		</div>
     </div>
-    
 	
 
 	<h3>User's followers also follow</h3>
