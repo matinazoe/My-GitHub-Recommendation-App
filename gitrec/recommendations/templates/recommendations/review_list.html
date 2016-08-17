@@ -21,7 +21,7 @@
 				<h6>rated {{ review.rating }} of 5 by <b> <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_review_list' review.user_name%}" >{{ review.user_name }}</a> </b><h6>
 
 				<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
-					<p id="r_comment">"{{ review.comment}}"</p>
+					<p id="r_comment">"{{ review.comment|truncatewords:3 }}"</p>
 					<p class="date"> Published {{ review.pub_date }} </p>
 			</div>
 		{% endfor %}

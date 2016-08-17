@@ -8,9 +8,9 @@
 {% endblock %}
 
 {% block content %}
-	{% if reviews %}
+	{% if latest_review_list %}
 		<ul>
-		{% for review in reviews %}
+		{% for review in latest_review_list %}
 			<li><a href="{% url 'recommendations:review_detail' review.id %}" >{{ review.title }}</a></li>
 		{% endfor %}
 		</ul>

@@ -17,13 +17,13 @@
 			{% endfor %}
 		</p>
 	</div>	
-	<h6>{{ repo.review_set.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
+	<h6>{{ repo.rates.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
 		<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
 <h3>Recent reviews</h3>
 
-{% if repo.review_set.all %}
+{% if repo.rates.all %}
 	<div class="row">
-		{% for review in repo.review_set.all %}
+		{% for review in repo.rates.all %}
 		<div class="col-xs-6 col-lg-4">
 			<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
 			<p id="r_comment">"{{ review.comment}}"</p>

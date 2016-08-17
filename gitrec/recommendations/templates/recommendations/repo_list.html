@@ -35,7 +35,7 @@
 				</p>
 				<b> Owner:  <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_repo_list' repo.owner_id %}">{{ repo.owner_id }}</b></a>
 				{% if repo.review_set.count %}
-					<h6 style="font-family:Lucida Console; font-size:110%;" ><b>{{ repo.review_set.count }} reviews </b></h6>
+					<h6 style="font-family:Lucida Console; font-size:100%;" ><b>{{ repo.review_set.count }} <a href="{% url 'recommendations:reviews_by_repo' repo.id %}">review{{ repo.review_set.count|pluralize }}</a> </b></h6>
 				
 					<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>
 				{% else %}

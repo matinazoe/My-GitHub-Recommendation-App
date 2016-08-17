@@ -27,7 +27,7 @@ import operator
 
 
 def homepage(request):
-    homepage_review_list = Review.objects.order_by('-pub_date')[:3]
+    homepage_review_list = Review.objects.order_by('-pub_date')[:2]
     context = {'homepage_review_list':homepage_review_list}
     return render(request,'recommendations/homepage.html', context)
 
@@ -105,13 +105,13 @@ def latest_reviews(request, tag_slug=None):
     paginator = Paginator(latest_review_list, 4) 
     page = request.GET.get('page')
     try:
-        reviews = paginator.page(page)
+        latest_review_list = paginator.page(page)
     except PageNotAnInteger:   
-        reviews = paginator.page(1)
+        latest_review_list = paginator.page(1)
     except EmptyPage:
-        reviews = paginator.page(paginator.num_pages)
+        latest_review_list = paginator.page(paginator.num_pages)
 #    context = {'review_list':latest_review_list}
-    return render(request, 'recommendations/last_reviews.html', {'reviews':reviews, 'page':page, 'tag': tag})
+    return render(request, 'recommendations/last_reviews.html', {'latest_review_list':latest_review_list, 'page':page, 'tag': tag})
 
 
 def review_detail(request, review_id):

@@ -53,6 +53,9 @@ User.add_to_class('following', models.ManyToManyField('self',
 
 
 # User Github models here.
+class RatedManager(models.Manager):
+    def get_queryset(self):
+        return super(RatedManager, self).get_queryset().all()
 
 class Project(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -65,13 +68,17 @@ class Project(models.Model):
     created_at = models.DateTimeField('date created')
     forked_from = models.ForeignKey('self', models.SET_NULL,blank=True,null=True)
     updated_at = models.DateTimeField('date updated',blank=True,null=True)
+
+    objects = models.Manager() # The default manager.
+    rated = RatedManager() # The custom manager.
+    
     tags = TaggableManager()
 	
     class Meta:
         ordering = ('-created_at',)
 	
     def average_rating(self):
-        all_ratings = map(lambda x: x.rating, self.review_set.all())
+        all_ratings = map(lambda x: x.rating, self.rates.all())
         return np.mean(all_ratings)
 
     def __str__(self):
@@ -119,7 +126,7 @@ class Review(models.Model):
         (4, '4'),
         (5, '5'),
     )
-    repo = models.ForeignKey(Project, on_delete=models.CASCADE)
+    repo = models.ForeignKey(Project, related_name='rates', on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published')
     user_name = models.ForeignKey(User, related_name='reviewer')
     comment = models.TextField()
