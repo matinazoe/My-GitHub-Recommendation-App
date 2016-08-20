@@ -11,6 +11,7 @@
 {% block content %}
   	{% if latest_review_list %}
 	<div>
+	<div class="row">
         {% if tag %}
             <h3>Reviews tagged with "{{ tag.name }}"</h3>
         {% endif %}	
@@ -25,6 +26,7 @@
 					<p class="date"> Published {{ review.pub_date }} </p>
 			</div>
 		{% endfor %}
+	</div>
 	</div>
 	{% else %}
 		<p>No reviews are available.</p>

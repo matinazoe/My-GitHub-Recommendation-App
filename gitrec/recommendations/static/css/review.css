@@ -33,7 +33,6 @@ h1 {
 }
 body {
 	background-color: #d9d9d9;
-	background-image: url(% static 'images/grey-back.jpg') no-repeat right bottom;
     padding-left: 12px;
 }
 h2 a {
@@ -87,14 +86,14 @@ p {
     float:right;
     width:30%;
     padding:10px;
-    background:#d9d9d9 url('images/grey-back.jpg') no-repeat right bottom; 
+    
     height:100%;
 }
 #sidebar_left { 
     float:left;
     width:70%;
     padding:10px;
-    background:#d9d9d9 url('images/grey-back.jpg') no-repeat right bottom; 
+    
     height:100%;
 }
 

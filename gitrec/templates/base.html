@@ -34,18 +34,28 @@
 			}
 			body {
 				
-				background-image: url(% static 'images/grey-back.jpg');
+				background: url('{% static "images/bluegrey.jpg" %}') no-repeat center center fixed;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
 				background-size: cover;
+				background-opacity: 0.5;
 			}
+			.jumbotron {
+				background: url('{% static "images/navy-blue-wallpaper.jpg" %}') no-repeat center center fixed;
+				background-size: cover;
+				color: white;
+				
+}
 		</style>
 	</head>
 	<body>
 	<div class="jumbotron jumbotron-fluid" >
-		 <div class="container">
+		 <img src="{% static 'images/globe-on-blue.jpg' %}" style="float:left;width:160px;height:120px;" /><div class="container">
 			<h1 class="display-3">
-				<img src="{% static 'images/globe-on-blue.jpg' %}" style="width:128px;height:100px;" /> GitHub Recommendation Engine
+				  GitHub Recommendation Engine
 			</h1>
-			<p class="lead" style="padding-left: 130px">An application to provide recommendations for Github.</p>
+			<p class="lead" style="padding-left: 170px">An application to provide recommendations for Github.</p>
 		 </div>
 	</div>		
 	<nav role="navigation" class="navbar navbar-full navbar-inverse">

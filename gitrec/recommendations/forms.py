@@ -38,7 +38,7 @@ class ProfileEditForm(forms.ModelForm):
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
-        fields = ['rating', 'title','comment','status']
+        fields = ['rating', 'title','comment']
         widgets = {
             'comment': Textarea(attrs={'cols': 40, 'rows': 15})
         }

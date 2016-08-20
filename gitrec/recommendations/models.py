@@ -63,7 +63,7 @@ class Project(models.Model):
     owner_id = models.ForeignKey(User, related_name='owns')
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
-    description = models.CharField(max_length=500, blank=True)
+    description = models.TextField(max_length=500, blank=True)
     language = models.CharField(max_length=50,blank=True,null=True)
     created_at = models.DateTimeField('date created')
     forked_from = models.ForeignKey('self', models.SET_NULL,blank=True,null=True)
