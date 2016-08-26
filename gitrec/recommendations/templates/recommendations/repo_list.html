@@ -25,6 +25,7 @@
 			{% endif %}
 			{% for repo in repos %}
 			<div class="col-xs-6 col-lg-4">
+			<div class="repos_list">
 				<h4><a href="{% url 'recommendations:repo_detail' repo.id %}"> {{ repo.name }}</a></h4>
 				<p class="tags">
 					Tags: 
@@ -42,6 +43,7 @@
 					 <br> <br>
 					<p>There're no reviews for this repository at the moment.</p>
 				{% endif %}
+			</div>
 			</div>
 			{% endfor %}
 		</div>

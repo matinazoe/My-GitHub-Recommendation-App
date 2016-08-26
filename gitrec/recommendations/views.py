@@ -58,9 +58,18 @@ def editProfile(request):
 
 @login_required
 def active_user_list(request):
-    users = User.objects.filter(is_active=True).order_by('-last_login')[:10]
+    users = User.objects.filter(is_active=True).order_by('-last_login')
+	
+    paginator = Paginator(users, 6) 
+    page = request.GET.get('page')
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:   
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
     return render(request, 'recommendations/user/active_user_list.html', {'section': 'active_users',
-                                                      'users': users})
+                                                      'users': users, 'page':page})
 
 @login_required
 def user_detail(request, user_id):

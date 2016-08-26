@@ -12,11 +12,16 @@ if(r.ok):
     print "This project is written in: " + repoItem['language']
     language=repoItem['language']
 
-from taggit.models import TaggedItem
+from taggit.models import TaggedItem, Tag
 from recommendations.models import Review, Project
 
+all_repos = Project.objects.all()
+for repo in all_repos: 
+	tag=Tag.objects.get_or_create(name=repo.language)
+
+	
 doom=get_object_or_404(Project, id=152)
-tagcplus=Tag.objects.get_or_create(name=language) 
+tag=Tag.objects.get_or_create(name=language) 
 tag152=get_object_or_404(TaggedItem, name=language)
 print tag152.id
 	

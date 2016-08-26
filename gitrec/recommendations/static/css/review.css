@@ -49,12 +49,21 @@ h3 {
 	background: #004d99  no-repeat fixed center;
 }
 h4 {
-    color:#1fada6;
+    color:#e6eeff;
 	padding-right: 15px;
 	font:  bold 15px/30px Verdana;
 	font-style: normal;
-	background: #FFEFD5 url("smiley.gif") no-repeat fixed center;
+	background: #28a4a4 url("smiley.gif") no-repeat fixed center;
 }
+h4  a{
+    color:#e6eeff;
+	padding-right: 15px;
+	font:  bold 15px/30px Verdana;
+	font-style: normal;
+	background: #28a4a4 url("smiley.gif") no-repeat fixed center;
+}
+
+
 h5 {
     color: #1a1aff;
     font:  bold 16px/30px Lucida Console, serif;
@@ -127,6 +136,18 @@ p {
 
 .user_details {
     background-color: Lavender   ;
+    color: #372f6a ;
+    margin: 20px 0 20px 0;
+    padding: 20px;
+} 
+.repos_list{
+    background-color: #f2e6ff  ;
+    color: #372f6a ;
+    margin: 20px 0 20px 0;
+    padding: 20px;
+} 
+.review_list{
+    background-color: #e6eeff  ;
     color: #372f6a ;
     margin: 20px 0 20px 0;
     padding: 20px;

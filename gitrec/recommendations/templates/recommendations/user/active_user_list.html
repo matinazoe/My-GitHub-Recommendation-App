@@ -12,8 +12,8 @@
 						<div class=" col-xs-6 col-lg-4">
 							<div class = "user_details">
 								<p style="font-family:verdana; background-color:#adebeb"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' user.id%}">{{ user.username }} </b> </a> </p> 
-								<p> {{ user.get_full_name }} </p>
-								<p> {{ user.email }} </p>
+								<p><b> __{{ user.get_full_name }}__  </b></p>
+								<p> '{{ user.email }}' </p>
 								<p style="font-size:85%"> <b>GitHub page: <a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></b></p>
 							</div>
 							<hr>	
@@ -24,5 +24,5 @@
 		{% else %}
 			<p>No users are active.</p>
 		{% endif %}
-	
+	{% include "pagination.html" with page=users %}
 {% endblock %}
