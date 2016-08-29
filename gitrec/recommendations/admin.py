@@ -26,7 +26,7 @@ admin.site.register(UserProfile, ProfileAdmin)
 	
 class RepoAdmin(admin.ModelAdmin):
     model = Project
-    list_display = ('id', 'url', 'owner_id', 'name', 'description', 'language', 'created_at', 'updated_at')
+    list_display = ('id', 'url', 'owner_id', 'name', 'description', 'language', 'forked_from', 'created_at', 'updated_at')
     search_fields = ['name']
     prepopulated_fields = {"slug": ("owner_id","name",)}	
 #    date_hierarchy = 'created_at'

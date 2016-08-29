@@ -19,19 +19,22 @@
 	</div>	
 	<h6>{{ repo.rates.count }} reviews ({{ repo.average_rating | floatformat }} average rating)</h6>
 		<p><b>url:</b>	<a href="{{repo.url}}">{{repo.url}}</a></p>
+		<p><b>Language:</b>	{{repo.language}}</p>
+		<p><b>Description:</b>	"{{repo.description|truncatewords:10 }}" <a href="{% url 'recommendations:repo_detail' repo.id %}">  Read more </a></p>
 <h3>Recent reviews</h3>
 
 {% if repo.rates.all %}
 	<div class="row">
 		{% for review in repo.rates.all %}
 		<div class="col-xs-6 col-lg-4">
+		<div class="review_list">
 			<h5 style="font-family:Comic Sans MS; font-size:100%;">Review Title: <a href="{% url 'recommendations:review_detail' review.id %}" >"<i>{{ review.title }}</i>"</a></h5>
-			<p id="r_comment">"{{ review.comment}}"</p>
+			<p id="r_comment">"{{ review.comment|truncatewords:7 }}"</p>
 			<h6>Rated {{ review.rating }} of 5 by {{ review.user_name }}<h6>
 			<h6><a href="{% url 'recommendations:review_detail' review.id %}">
 			Read more
 			</a></h6>
-
+		</div>
 		</div>
 		{% endfor %}
 	</div>

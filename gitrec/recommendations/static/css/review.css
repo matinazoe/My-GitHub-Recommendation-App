@@ -152,8 +152,15 @@ p {
     margin: 20px 0 20px 0;
     padding: 20px;
 } 
-
-
+.description{
+    background-color: #f2e6ff  ;
+	width:70%;
+    color: #372f6a ;
+	font-family: courier;
+	font-style:bold;
+    margin: 0px;
+    padding: 10px;
+}
 hr { 
     display: block;
     margin-top: 0.5em;

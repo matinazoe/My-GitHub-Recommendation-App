@@ -7,7 +7,7 @@
 
 {% block content %}
 	<div class="container">
-		<h3>Search for Repos</h3>
+		<h5>Search for Repos</h5>
 		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 		<form id="searchform" action="{% url 'recommendations:search_repo' %}" method="get" accept-charset="utf-8">
 			<input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search for ">
@@ -35,13 +35,14 @@
 					{% endfor %}
 				</p>
 				<b> Owner:  <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_repo_list' repo.owner_id %}">{{ repo.owner_id }}</b></a>
-				{% if repo.review_set.count %}
-					<h6 style="font-family:Lucida Console; font-size:100%;" ><b>{{ repo.review_set.count }} <a href="{% url 'recommendations:reviews_by_repo' repo.id %}">review{{ repo.review_set.count|pluralize }}</a> </b></h6>
-				
-					<h6 style="font-family:Lucida Console; font-size:100%;" >{{ repo.average_rating | floatformat }} average rating</h6>
+				<p> <b> Language:</b> {{ repo.language }}</p>
+				<b><i>Description:</i></b>
+				<p id="r_comment">" {{repo.description|truncatewords:5 }}"</p>
+				<br> 
+				{% if repo.rates.count %}
+					<h6 style="font-family:Lucida Console; font-size:100%;" ><b> <a href="{% url 'recommendations:reviews_by_repo' repo.id %}">{{ repo.rates.count }} review{{ repo.rates.count|pluralize }}</a> </b> (average rating: {{ repo.average_rating | floatformat }})</h6>
 				{% else %}
-					 <br> <br>
-					<p>There're no reviews for this repository at the moment.</p>
+					<p style="font-family:Lucida Console; font-size:100%;"> Not rated yet</p>
 				{% endif %}
 			</div>
 			</div>
