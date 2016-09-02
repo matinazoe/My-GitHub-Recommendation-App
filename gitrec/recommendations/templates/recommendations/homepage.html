@@ -18,7 +18,7 @@
 					<ul>
 					{% for repo in most_reviewed_repos %}
 						<li>
-							<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }}</a>:<a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' repo.id %}"> <i>Reviews</i>	</a>
+							<a href="{% url 'recommendations:repo_detail' repo.id %}"><b>{{ repo.name }}</b></a>:<a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' repo.id %}"> <i>Reviews</i>	</a>
 						</li>
 					{% endfor %}
 					</ul>
@@ -33,7 +33,7 @@
 					<ul>
 					{% for repo in most_watched_repos %}
 						<li>
-							<a href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }}</a>:<a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' repo.id %}"> <i>Reviews</i>	</a>
+							<a href="{% url 'recommendations:repo_detail' repo.id %}"><b>{{ repo.name }}</b></a>:<a style="font-family:Lucida Console; font-size:90%;" href="{% url 'recommendations:reviews_by_repo' repo.id %}"> <i>Reviews</i>	</a>
 						</li>
 					{% endfor %}
 					</ul>

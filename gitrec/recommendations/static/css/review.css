@@ -20,6 +20,12 @@
  margin-left: 0;
 }
 
+.container_login {
+  width:40%;
+  margin: 0px auto;
+  width: 640px;
+}
+
 #container_user {
  
  width:40%;
@@ -49,18 +55,18 @@ h3 {
 	background: #004d99  no-repeat fixed center;
 }
 h4 {
-    color:#e6eeff;
+    color:#ffffff;
 	padding-right: 15px;
 	font:  bold 15px/30px Verdana;
 	font-style: normal;
-	background: #28a4a4 url("smiley.gif") no-repeat fixed center;
+	background: #009999 url("smiley.gif") no-repeat fixed center;
 }
 h4  a{
-    color:#e6eeff;
+    color:#ffffff;
 	padding-right: 15px;
 	font:  bold 15px/30px Verdana;
 	font-style: normal;
-	background: #28a4a4 url("smiley.gif") no-repeat fixed center;
+	background: #009999 url("smiley.gif") no-repeat fixed center;
 }
 
 

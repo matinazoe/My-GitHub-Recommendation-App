@@ -13,7 +13,7 @@
 		</p>
 	</div>
 	{% if repo.rates.all %}
-		<h6 style="font-family:Lucida Console; font-size:100%;"><b><a href="{% url 'recommendations:reviews_by_repo' repo.id %}">  {{ repo.rates.count }} Reviews	</a> </b>({{ repo.average_rating | floatformat }} average rating)</h6>
+		<h6 style="font-family:Lucida Console; font-size:100%;"><b><a href="{% url 'recommendations:reviews_by_repo' repo.id %}">  {{ repo.rates.count }} Reviews	</a> </b>( average rating : {{ repo.average_rating | floatformat }})</h6>
 	{% else %}
 		<p> Not rated yet</p>
 	{% endif %}
@@ -33,7 +33,7 @@
 				{% for repo in recommended_projects %}
 					<div class="col-xs-6 col-lg-4">
 						<b> <a style="color:#008080; font-style: oblique; font-size:110%;" href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }} </b> </a>
-						<p><b>url:	<a style="font-size:85%;" href="{{repo.url}}">{{repo.url}}</a></b></p>
+						<p><b>GitHub url:	<a style="font-size:85%;" href="{{repo.url}}">{{repo.url}}</a></b></p>
 						
 					</div>
 				{% endfor %}
@@ -48,7 +48,7 @@
 		{% for repo in similar_repos %}
 			<div class="col-xs-6 col-lg-4">
 				<b> <a style="color:#008080; font-style: oblique; font-size:110%;" href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }} </b> </a>
-				<p><b>url:	<a style="font-size:85%;" href="{{repo.url}}">{{repo.url}}</a></b></p>
+				<p><b>GitHub url:	<a style="font-size:85%;" href="{{repo.url}}">{{repo.url}}</a></b></p>
 			</div>
 		
 		{% empty %}
@@ -57,9 +57,9 @@
 	</div>
 	<h3>Recent reviews</h3>
 
-	{% if repo.review_set.all %}
+	{% if repo.rates.all %}
 		<div class="row">
-			{% for review in repo.review_set.all %}
+			{% for review in repo.rates.all %}
 				<div class="col-xs-6 col-lg-4">
 					<li><em><b>{{ review.title }}</b></em>
 					<h5><a href="{% url 'recommendations:review_detail' review.id %}">  Read more  </a></h5> </li>

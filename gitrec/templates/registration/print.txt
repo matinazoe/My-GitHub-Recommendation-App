@@ -1,0 +1,9 @@
+logged_out.html
+login init.html
+login new.html
+login.html
+password_change_done.html
+password_change_form.html
+print.txt
+registration_complete.html
+registration_form.html

@@ -1,0 +1,70 @@
+from django.db.models import Q
+query = 'matina'
+results = User.objects.filter(Q(username__icontains=query) | Q(last_name__icontains=query)).order_by('username')
+
+from recommendations.models import Review, Project
+query = 'template'
+results = Project.objects.filter(Q(name__icontains=query) | Q(description__icontains=query)).order_by('created_at')
+
+from django.db.models import Q
+query = 'matina'
+results = User.objects.filter(username=query|Q(last_name__icontains=query)).order_by('username')
+
+for user in results:
+	print user
+	print user.id
+	
+
+import collections
+from collections import Counter
+import re
+from django.conf import settings
+from django.contrib.auth.models import User
+
+from recommendations.models import Project, Review
+allreviews = Reviews.objects.all()
+	
+def get_repo_ids_per_reviewer(reviewer_id):
+	reviews=Review.objects.filter(user_name=reviewer_id)
+	ids_per_reviewer = []
+	for repo_id in [r.repo for r in reviews]:
+		ids_per_reviewer.append(repo_id)	
+	return ids_per_reviewer		
+
+def get_reviewers_ids_per_repo(project_id):
+	reviews = Review.objects.filter(repo=project_id)
+	reviewers_ids = []
+	for reviewer_id in [r.user_name for r in reviews]:
+		reviewers_ids.append(reviewer_id)
+	return reviewers_ids
+
+def get_reviewed_with_ids(project_id):
+	reviewers_ids = get_reviewers_ids_per_repo(project_id)
+	reviewed_with_ids = []
+	for reviewers_id in reviewers_ids:
+		ids_per_reviewer = get_repo_ids_per_reviewer(reviewers_id)
+		for repo_id in ids_per_reviewer:
+			if repo_id != project_id:
+				reviewed_with_ids.append(repo_id)
+	return reviewed_with_ids
+
+def suggest_projects_for(project, max_results=6):
+	reviewed_with_ids = get_reviewed_with_ids(project.id)
+	if project.id in reviewed_with_ids:
+		reviewed_with_ids.remove(project.id)
+	suggested_ids = Counter(reviewed_with_ids).most_common(max_results)
+	ids = []
+	for item in suggested_ids:
+		ms=str(item)
+		i=ms.find(': ')
+		j=ms.find('>')
+		sname=ms[i+2:j]
+		item_id=Project.objects.filter(name=sname).values('id')[0]['id']
+		ids.append(item_id)
+	
+	suggested_projects = list(Project.objects.filter(id__in=ids))
+	return suggested_projects
+
+from django.shortcuts import get_object_or_404, render, render_to_response
+repo = get_object_or_404(Project, pk=43757419)
+suggest_projects_for(repo, max_results=6)

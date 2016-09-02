@@ -1,0 +1,6 @@
+active_user_list.html
+editProfile.html
+print.txt
+register.html
+register_done.html
+user_detail.html

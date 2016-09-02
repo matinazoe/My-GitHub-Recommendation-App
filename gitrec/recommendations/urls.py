@@ -24,6 +24,9 @@ urlpatterns = [
     url(r'^users/dashboard^$', views.dashboard, name='dashboard'),
     url(r'^users/$', views.active_user_list, name='active_user_list'),	
     url(r'^users/(?P<user_id>\w+)/$', views.user_detail, name='user_detail'),
+    url(r'^users/edituser/$', views.editUserDetails, name='edit_user'),
+    url(r'^users/edit/$', views.editProfile, name='edit_profile'),
+    url(r'^users/search/$', views.search_user, name='search_user'),
     # Reviews
     url(r'^reviews$', views.review_list, name='review_list'),
     url(r'^reviews/latest$', views.latest_reviews, name='latest_reviews'),

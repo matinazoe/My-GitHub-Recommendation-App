@@ -8,7 +8,7 @@
 
 {% block content %}
 
-	<div id="login" class="container_login">
+	<div id="login" class="container">
 		<div>
 			<form action="{% url 'auth:login' %}" method="post" class="form">
 				{% csrf_token %}

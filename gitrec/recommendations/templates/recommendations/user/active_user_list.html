@@ -1,28 +1,27 @@
 {% extends "base.html" %}
 
-
 {% block title %}Active Users{% endblock %}
 
 {% block content %}
-	
-		{% if users %}
-			<div class="row">
-				<div id="user-list">
-					{% for user in users %}
-						<div class=" col-xs-6 col-lg-4">
-							<div class = "user_details">
-								<p style="font-family:verdana; background-color:#adebeb"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' user.id%}">{{ user.username }} </b> </a> </p> 
-								<p><b> __{{ user.get_full_name }}__  </b></p>
-								<p> '{{ user.email }}' </p>
-								<p style="font-size:85%"> <b>GitHub page: <a href="https://github.com/{{ user.username }}">https://github.com/{{ user.username }} </a></b></p>
-							</div>
-							<hr>	
+
+	{% if users %}
+		<div class="row">
+			<div id="user-list">
+				{% for actuser in users %}
+					<div class=" col-xs-6 col-lg-4">
+						<div class = "user_details">
+							<p style="font-family:verdana; background-color:#adebeb"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' actuser.id%}">{{ actuser.username }} </b> </a> </p> 
+							<p><b> {{ actuser.get_full_name }} </b></p>
+							<p> {{ actuser.email }} </p>
+							<p style="font-size:85%"> <b>GitHub page: <a href="https://github.com/{{ actuser.username }}">https://github.com/{{ actuser.username }} </a></b></p>
 						</div>
-					{% endfor %}
-				</div>
+						<hr>	
+					</div>
+				{% endfor %}
 			</div>
-		{% else %}
-			<p>No users are active.</p>
-		{% endif %}
+		</div>
+	{% else %}
+		<p>No users are active.</p>
+	{% endif %}
 	{% include "pagination.html" with page=users %}
 {% endblock %}

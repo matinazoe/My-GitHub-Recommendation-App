@@ -47,17 +47,22 @@
 
 	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 	<h3> Repositories also reviewed</h3>
-	<div class="row">
-		{% for repo in similar_repos %}
-			<div class="col-xs-6 col-lg-4">
-				<b> <a style="color:#008080; font-style: oblique; font-size:110%;" href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }} </b> </a>
-				<p>url:	<a href="{{repo.url}}">{{repo.url}}</a></p>
+	{% if recommended_projects %}
+		<div class="recommendations">
+			<p style="background-color:powderblue;"> <b>Users who reviewed on this Repository also reviewed: </b></p>
+			<div class="row">
+				{% for repo in recommended_projects %}
+					<div class="col-xs-6 col-lg-4">
+						<b> <a style="color:#008080; font-style: oblique; font-size:110%;" href="{% url 'recommendations:repo_detail' repo.id %}">{{ repo.name }} </b> </a>
+						<p><b>GitHub url:	<a style="font-size:85%;" href="{{repo.url}}">{{repo.url}}</a></b></p>
+						
+					</div>
+				{% endfor %}
 			</div>
-		
-		{% empty %}
-			<p style="padding:13px;"> There are no similar repos yet.</p>
-		{% endfor %}
-	</div>
+		</div>
+	{% else %}
+		<p>There are no recommendations for this Repository</p>
+	{% endif %}
 	<div class="add-review">
 		<div class="panel panel-default">
 			<div class="panel-body">If you want to post your opinion for this Repository </div> 

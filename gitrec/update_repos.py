@@ -17,4 +17,20 @@ for repo in all_repos:
         print repo.name
         repo.save()
 		
-		
+
+for repo in all_repos: 
+    url='https://github.com/'+repo.owner_id.username+'/'+repo.name
+    repo.url=url
+    print repo.owner_id.username, repo.name
+    print repo.url
+    repo.save()
+	
+	r = requests.get(url)
+    if(r.ok):
+        repoItem = json.loads(r.text or r.content)
+        repo.url=repoItem['html_url']
+        repo.created_at=repoItem['created_at']
+        repo.language=repoItem['language']
+        print repo.owner_id.username
+        print repo.name
+        repo.save()

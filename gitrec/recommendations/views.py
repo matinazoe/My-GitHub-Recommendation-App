@@ -21,6 +21,7 @@ from .models import Review, Project
 from .forms import ReviewForm
 from .recommender import Recommender
 from .u_recommender import U_recommender
+from .r_recommender import R_Recommender
 
 import datetime
 import operator
@@ -37,7 +38,25 @@ def dashboard(request):
 
 # User Views
 @login_required
-def editProfile(request):
+def editUserDetails(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user,
+                                 data=request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+
+            messages.success(request, 'User detail updated successfully')
+        else:
+            messages.error(request, 'Error updating your profile')
+    else:
+        user_form = UserEditForm(instance=request.user)
+    return render(request, 'recommendations/user/editUser.html', {'user_form': user_form})
+
+@login_required
+def editProfile(request, username=None):
+    if not username:
+        username = request.user.username
+    user = get_object_or_404(User, username=username)
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
                                  data=request.POST)
@@ -53,8 +72,7 @@ def editProfile(request):
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
-    return render(request, 'account/editProfile.html', {'user_form': user_form, 'profile_form': profile_form})
-
+    return render(request, 'recommendations/user/editProfile.html', {'user_form': user_form, 'profile_form': profile_form})
 
 @login_required
 def active_user_list(request):
@@ -73,13 +91,12 @@ def active_user_list(request):
 
 @login_required
 def user_detail(request, user_id):
-    if not user_id:
-        user_id = request.user.user_id
-    user = get_object_or_404(User, pk=user_id, is_active=True)
+
+    selected_user = get_object_or_404(User, pk=user_id, is_active=True)
     r = U_recommender()
-    recommended_users = r.suggest_users(user, 4)
+    recommended_users = r.suggest_users(selected_user, 4)
     return render(request, 'recommendations/user/user_detail.html', {'section': 'active_users',
-                                                        'user': user, 'recommended_users':recommended_users})													  	
+                                                        'selected_user': selected_user, 'recommended_users':recommended_users})													  	
 
 
 # Review Views
@@ -140,9 +157,11 @@ def reviews_by_repo(request, repo_id):
     if not repo_id:
         repo_id = request.repo.id
     repo = get_object_or_404(Project, id=repo_id)
+    r = R_Recommender()
+    recommended_projects = r.suggest_projects_for(repo, 4)
     latest_review_list = Review.objects.filter(repo=repo).order_by('-pub_date')
-    return render(request, 'recommendations/repo_review_detail.html', {'latest_review_list':latest_review_list, 'repo': repo})
-	
+    return render(request, 'recommendations/repo_review_detail.html', {'latest_review_list':latest_review_list, 'repo': repo, 'recommended_projects':recommended_projects})
+
 
 def review_detail_slug(request, year, month, day, review):
     review = get_object_or_404(Review, slug=review, status='published', publish__year=year, publish__month=month, publish__day=day)
@@ -196,16 +215,14 @@ def add_review(request, repo_id):
         rating = form.cleaned_data['rating']
         title = form.cleaned_data['title']
         comment = form.cleaned_data['comment']
-        status = form.cleaned_data['status']		
-#        user_name = form.cleaned_data['user_name']
-        
+
         review = Review()
         review.repo = repo
         review.user_name = user
         review.rating = rating
         review.title = title
         review.comment = comment
-        review.status = status
+
         review.pub_date = datetime.datetime.now()
         review.save()
         return HttpResponseRedirect(reverse('recommendations:repo_detail', args=(repo.id,)))
@@ -216,12 +233,21 @@ def search_repo(request):
     query = ''
     results = None
     if ('q' in request.GET) and request.GET['q'].strip():
-#        query_string = request.GET['q']
         query = request.GET.get('q')
 		
     results = Project.objects.filter(Q(name__icontains=query) | Q(description__icontains=query)).order_by('created_at')
 
     return render(request, 'recommendations/search_results.html', { 'query': query, 'results': results})
+	
+def search_user(request):
+    query = ''
+    results = None
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query = request.GET.get('q')
+		
+    results = User.objects.filter(Q(username__icontains=query) | Q(last_name__icontains=query)).order_by('username')
+
+    return render(request, 'recommendations/user/user_search_results.html', {'section': 'active_users', 'query': query, 'result': result})
 
 
 class RepoSearchListView(ListView):

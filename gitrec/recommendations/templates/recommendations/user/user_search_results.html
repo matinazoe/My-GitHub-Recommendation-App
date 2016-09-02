@@ -1,0 +1,38 @@
+{% extends 'recommendations/user/active_user_list.html' %}
+
+{% block title %}
+<h1> Search for Users </h1>
+{% endblock %}
+{% block content %}
+	<div class="container_search">
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+		<form id="searchform" action="{% url 'recommendations:search_user' %}" method="get" accept-charset="utf-8">
+			<input class="searchfield" id="searchbox" name="query" type="text" placeholder="Search for ">
+			<button type="submit" class="btn btn-info">
+
+				<span class="glyphicon glyphicon-search"></span> Search
+			</button>
+
+		</form>
+	</div>
+	{% if results %}
+		<div class="row">
+			<div id="user-list">
+			{% for actuser in result %}
+				<div class=" col-xs-6 col-lg-4">
+					<div class = "user_details">
+						<p style="font-family:verdana; background-color:#adebeb"><b> username: <a style="font-style: oblique; font-size:110%;" href="{% url 'recommendations:user_detail' actuser.id %}">{{ actuser.username }}  </a> </b></p> 
+						<p><b> __{{ actuser.get_full_name }}__  </b></p>
+						<p> '{{ actuser.email }}' </p>
+						<p style="font-size:85%"> <b>GitHub page: <a href="https://github.com/{{ actuser.username }}">https://github.com/{{ actuser.username }} </a></b></p>
+					</div>
+					<hr>	
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+	{% else %}
+		<p>No users found.</p>
+	{% endif %}
+	{% include "pagination.html" with page=repos %}
+{% endblock %}

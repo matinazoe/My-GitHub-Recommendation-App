@@ -1,0 +1,5 @@
+base.html
+pagination.html
+print.txt
+registration
+user_detail.html
