@@ -4,8 +4,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from django.db.models import Count
 from django.db.models import Q
 
@@ -13,12 +14,19 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
+from django.views.decorators.csrf import csrf_protect
+from django.template.response import TemplateResponse
+from django.contrib.sites.shortcuts import get_current_site
 
 from django.contrib import messages
 from taggit.models import Tag
 
-from .models import Review, Project
-from .forms import ReviewForm
+from .models import Review, Project, UserProfile
+from .forms import ReviewForm, UserProfileForm,  UserEditForm
+from django.forms.models import inlineformset_factory
 from .recommender import Recommender
 from .u_recommender import U_recommender
 from .r_recommender import R_Recommender
@@ -38,19 +46,38 @@ def dashboard(request):
 
 # User Views
 @login_required
-def editUserDetails(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user,
-                                 data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
+def edit_user(request, pk):
+    user = User.objects.get(pk=pk)
+ 
+    # prepopulate UserProfileForm with retrieved user values from above.
+    user_form = UserEditForm(instance=user)
+ 
+    # The sorcery begins from here, see explanation below
+    ProfileInlineFormset = inlineformset_factory(User, UserProfile, fields=('company', 'location', 'type'))
+    formset = ProfileInlineFormset(instance=user)
 
-            messages.success(request, 'User detail updated successfully')
-        else:
-            messages.error(request, 'Error updating your profile')
+    if request.user.is_authenticated() and request.user.id == user.id:
+        if request.method == "POST":
+            user_form = UserEditForm(request.POST, request.FILES, instance=user)
+            formset = ProfileInlineFormset(request.POST, request.FILES, instance=user)
+ 
+            if user_form.is_valid():
+                created_user = user_form.save(commit=False)
+                formset = ProfileInlineFormset(request.POST, request.FILES, instance=created_user)
+ 
+                if formset.is_valid():
+                    created_user.save()
+                    formset.save()
+                    return HttpResponseRedirect('user_detail')
+ 
+        return render(request, 'recommendations/user/account_update.html', {
+            "noodle": pk,
+            "noodle_form": user_form,
+            "formset": formset,
+        })
     else:
-        user_form = UserEditForm(instance=request.user)
-    return render(request, 'recommendations/user/editUser.html', {'user_form': user_form})
+        raise PermissionDenied
+
 
 @login_required
 def editProfile(request, username=None):
@@ -269,4 +296,5 @@ class RepoSearchListView(ListView):
                        (Q(description__icontains=q) for q in query_list))
             )
 
-        return result						  
+        return result
+

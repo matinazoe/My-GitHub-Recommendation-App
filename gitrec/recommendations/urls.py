@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from . import views
 from .views import RepoSearchListView
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     # ex: /
@@ -24,8 +25,10 @@ urlpatterns = [
     url(r'^users/dashboard^$', views.dashboard, name='dashboard'),
     url(r'^users/$', views.active_user_list, name='active_user_list'),	
     url(r'^users/(?P<user_id>\w+)/$', views.user_detail, name='user_detail'),
-    url(r'^users/edituser/$', views.editUserDetails, name='edit_user'),
-    url(r'^users/edit/$', views.editProfile, name='edit_profile'),
+
+    url(r'^users/edit/account/$', views.edit_user, name='edit_myuser'),
+    url(r'^users/edit/$', views.editProfile, name='edit_userprofile'),
+	
     url(r'^users/search/$', views.search_user, name='search_user'),
     # Reviews
     url(r'^reviews$', views.review_list, name='review_list'),
@@ -34,7 +37,7 @@ urlpatterns = [
     url(r'^review/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<review>[-\w]+)/$', views.review_detail_slug, name='review_detail_slug'),
     url(r'^review/tag/(?P<tag_slug>[-\w]+)/$', views.review_list, name='review_list_by_tag'),
     url(r'^review/repo/(?P<repo_id>\w+)/$', views.reviews_by_repo, name='reviews_by_repo'),
-#	url(r'^reviews/repo/(?P<repo_id>\w+)/$', views.repo_review_list, name='repo_review_list'),
+
 	# ex: /review/user - get reviews for the logged user
     url(r'^review/user/(?P<username>\w+)/$', views.user_review_list, name='user_review_list'),
     url(r'^review/user/$', views.user_review_list, name='user_review_list'),
@@ -48,5 +51,6 @@ urlpatterns = [
     # ex: /repo/5/
     url(r'^repo/(?P<repo_id>\w+)/$', views.repo_detail, name='repo_detail'),
     url(r'^repo/(?P<repo_id>\w+)/add_review/$', views.add_review, name='add_review'),
+    
 
 ]

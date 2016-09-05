@@ -139,3 +139,11 @@ REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1
+
+if DEBUG:
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 1025
+    EMAIL_HOST_USER = 'matina.kan@gmail.com'
+    EMAIL_HOST_PASSWORD = 'alex0708'
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = 'Recommendations'

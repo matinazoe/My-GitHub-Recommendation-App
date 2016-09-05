@@ -51,7 +51,7 @@
 	<div class="jumbotron jumbotron-fluid" >
 		 <img src="{% static 'images/globe-on-blue.jpg' %}" style="float:left;width:160px;height:120px;" /><div class="container">
 			<h1 class="display-3">
-				  GitHub Recommendation Engine
+				  Git Recommendations
 			</h1>
 			<p class="lead" style="padding-left: 170px">An application to provide recommendations for Github.</p>
 		 </div>
@@ -80,10 +80,12 @@
 						<ul role="menu" class="dropdown-menu">
 				<!-- 			<li><a href="#"> {{ user.username }}.. Edit your Details</a></li> -->
 							<li><a href="{% url 'recommendations:user_detail' user.id%}"> {{ user.username }}'s Info</a></li>
+
+							<li><a href="{% url 'password_change' %}">Change your Password</a></li> 
 							<li><a href="#">........</a></li>
 							<li class="divider"></li>
-							<li><a href="{% url 'recommendations:user_review_list' user.username %}"> User Reviews</a></li>
-							<li><a href="{% url 'recommendations:user_repo_list' user.username %}"> User Repositories</a></li>
+							<li><a href="{% url 'recommendations:user_review_list' user.username %}"> {{ user.username }}'s Reviews</a></li>
+							<li><a href="{% url 'recommendations:user_repo_list' user.username %}"> {{ user.username }}'s Repositories</a></li>
 						</ul>
 					</li>
 

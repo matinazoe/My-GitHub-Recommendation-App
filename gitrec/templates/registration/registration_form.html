@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
-
+<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 
 {% block title %}
-	<h2>Register</h2>
+	<h3 class=”form-signin-heading” >Register</h3>
 {% endblock %}
 
 {% block content %}
+<div style="width:40%" class="container_form">
 	<form method="post" class="form">
 		{% csrf_token %}
 		{% bootstrap_form form layout='inline' %}
+		<p style= "color:red" > * Password should be at least 8 characters long(letters AND numbers) and different from the username </p>
 		{% buttons %}
 		<button type="submit" class="btn btn-primary">
 			{% bootstrap_icon "user" %} Register
 		</button>
 		{% endbuttons %}
 	</form>
+</div>
 {% endblock %}

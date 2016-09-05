@@ -30,7 +30,10 @@ class ProfileEditForm(forms.ModelForm):
         model = UserProfile
         fields = ('company', 'location', 'type')
 		
-
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ('user',)
 
 # Project Forms
 

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
+from django.db.models.signals import post_save
 
 
 from django.db import models
@@ -15,6 +16,7 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profiled', blank=True)
 # Can retrieve related objects as userprofile.user.(all) or from a user object as user.profiled.(all)
 	company = models.CharField(max_length=100,blank=True,null=True)
+	slug = models.SlugField(max_length=100, null=True)
 	location = models.CharField(max_length=250,blank=True)
 	type = models.CharField(max_length=100)
 
@@ -31,7 +33,7 @@ def create_profile(sender, instance, created, **kwargs):
 	if created:
 		profile, created = UserProfile.objects.get_or_create(user=instance)
 
-from django.db.models.signals import post_save
+
 post_save.connect(create_profile, sender=User)
 
 class Followers(models.Model):
