@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 {% block title %}
-<h1>Repos by {{ username }}</h1>
+<h1>Repos by  <a href="{% url 'recommendations:user_detail' user.id%}"> {{ username }}</a></h1>
 {% endblock %}
 
 {% block content %}
