@@ -43,11 +43,11 @@ body {
 }
 h2 a {
     color: #1a1aff;
-    font: italic bold 22px/30px Lucida Console, serif;
+    font: italic bold 18px/30px Lucida Console, serif;
 }
 h2 {
     color: #1a1aff;
-    font:  bold Lobster;
+    font:  bold 18px/30px Lucida Console, serif;
 }
 h3 {
     color: #ffffff;

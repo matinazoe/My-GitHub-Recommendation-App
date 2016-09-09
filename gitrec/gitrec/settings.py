@@ -141,9 +141,9 @@ REDIS_PORT = 6379
 REDIS_DB = 1
 
 if DEBUG:
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_PORT = 1025
-    EMAIL_HOST_USER = 'matina.kan@gmail.com'
-    EMAIL_HOST_PASSWORD = 'alex0708'
+    EMAIL_HOST = 'mailgate.oga.gr'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'm.kantartzoglou@oga.gr'
+    EMAIL_HOST_PASSWORD = 'zoe2804'
     EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = 'Recommendations'
+    DEFAULT_FROM_EMAIL = 'm.kantartzoglou@oga.gr'
